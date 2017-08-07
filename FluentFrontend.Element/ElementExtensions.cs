@@ -8,6 +8,6 @@ namespace FluentFrontend.Element
     {
         public static FluentElementHelper Element(this IFluentAdapter adapter) => new FluentElementHelper(adapter);
 
-        public static IElement<Tooltip> Tooltip(this FluentElementHelper helper) => helper.GetElement(new Tooltip());
+        public static IElement<Tooltip.Tooltip> Tooltip(this FluentElementHelper helper) => helper.GetElement(new Tooltip.Tooltip());
     }
 }

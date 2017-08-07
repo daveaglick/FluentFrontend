@@ -1,6 +1,6 @@
 ﻿using FluentFrontend.Vue;
 
-namespace FluentFrontend.Element
+namespace FluentFrontend.Element.Tooltip
 {
     public static class TooltipExtensions
     {

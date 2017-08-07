@@ -1,4 +1,4 @@
-﻿namespace FluentFrontend.Element
+﻿namespace FluentFrontend.Element.Tooltip
 {
     public enum TooltipPlacement
     {
