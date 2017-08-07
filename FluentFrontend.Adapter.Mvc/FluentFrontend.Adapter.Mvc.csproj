@@ -73,6 +73,7 @@
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="MvcElement.cs" />
     <Compile Include="FluentMvcAdapter.cs" />
+    <Compile Include="MvcModelMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

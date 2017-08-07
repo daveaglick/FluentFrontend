@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Linq.Expressions;
 
 namespace FluentFrontend
 {
@@ -17,5 +19,12 @@ namespace FluentFrontend
         /// <param name="tag">An instance of the specified tag.</param>
         /// <returns>A new element.</returns>
         IElement<TTag> GetElement<TTag>(IFluentHelper helper, TTag tag) where TTag : class, ITag;
+    }
+
+    public interface IFluentAdapter<TModel> : IFluentAdapter
+    {
+        TModel Model { get; }
+
+        IModelMetadata GetModelMetadata<TProperty>(Expression<Func<TModel, TProperty>> expression);
     }
 }

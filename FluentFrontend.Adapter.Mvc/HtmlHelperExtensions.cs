@@ -13,5 +13,12 @@ namespace FluentFrontend.Adapter.Mvc
         {
             return new FluentMvcAdapter(htmlHelper.ViewContext.Writer);
         }
+
+        public static IFluentAdapter<TModel> Fluent<TModel>(this HtmlHelper<TModel> htmlHelper)
+        {
+            return new FluentMvcAdapter<TModel>(
+                htmlHelper.ViewContext.Writer,
+                htmlHelper.ViewData == null ? default(TModel) : htmlHelper.ViewData.Model);
+        }
     }
 }

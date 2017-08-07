@@ -11,4 +11,11 @@ namespace FluentFrontend.Element
         {
         }
     }
+
+    public class FluentElementHelper<TModel> : FluentElementHelper
+    {
+        public FluentElementHelper(IFluentAdapter<TModel> adapter) : base(adapter)
+        {
+        }
+    }
 }
