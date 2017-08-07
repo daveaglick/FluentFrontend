@@ -6,9 +6,9 @@ using System.Text;
 
 namespace FluentFrontend.Vue
 {
-    public class FluentVueHelper : FluentLibraryHelper
+    public class FluentVueHelper : FluentHelper
     {
-        public FluentVueHelper(IFluentHelper fluentHelper) : base(fluentHelper)
+        public FluentVueHelper(IFluentAdapter adapter) : base(adapter)
         {
         }
 
@@ -19,14 +19,16 @@ namespace FluentFrontend.Vue
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return GetAttributeValue(value, out string attributeValue) 
-                ? new KeyValuePair<string, string>($"v-bind:{name}", attributeValue) 
-                : base.GetAttribute(name, value);
+            if (GetAttributeValue(value, out object attributeValue))
+            {
+                name = $"v-bind:{name}";
+            }
+            return base.GetAttribute(name, attributeValue);
         }
 
-        private static bool GetAttributeValue(object value, out string attributeValue)
+        private static bool GetAttributeValue(object value, out object attributeValue)
         {
-            attributeValue = null;
+            attributeValue = value;
 
             if (value is BoundValue boundValue)
             {
@@ -48,5 +50,6 @@ namespace FluentFrontend.Vue
             
             return false;
         }
+
     }
 }

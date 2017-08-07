@@ -72,7 +72,7 @@
   <ItemGroup>
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="MvcElement.cs" />
-    <Compile Include="FluentMvcHelper.cs" />
+    <Compile Include="FluentMvcAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

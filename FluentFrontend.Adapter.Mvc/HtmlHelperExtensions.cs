@@ -9,9 +9,9 @@ namespace FluentFrontend.Adapter.Mvc
 {
     public static class HtmlHelperExtensions
     {
-        public static IFluentHelper Fluent(this HtmlHelper htmlHelper)
+        public static IFluentAdapter Fluent(this HtmlHelper htmlHelper)
         {
-            return new FluentMvcHelper(htmlHelper.ViewContext.Writer);
+            return new FluentMvcAdapter(htmlHelper.ViewContext.Writer);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace FluentFrontend.Adapter.Webpages
 {
     public static class HtmlHelperExtensions
     {
-        public static IFluentHelper Fluent(this HtmlHelper htmlHelper, WebPageBase webPageBase)
+        public static IFluentAdapter Fluent(this HtmlHelper htmlHelper, WebPageBase webPageBase)
         {
-            return new FluentWebpagesHelper(webPageBase.Output);
+            return new FluentWebpagesAdapter(webPageBase.Output);
         }
     }
 }

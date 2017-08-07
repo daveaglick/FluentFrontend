@@ -6,6 +6,6 @@ namespace FluentFrontend.Vue
 {
     public static class VueExtensions
     {
-        public static FluentVueHelper Vue(this IFluentHelper helper) => new FluentVueHelper(helper);
+        public static FluentVueHelper Vue(this IFluentAdapter adapter) => new FluentVueHelper(adapter);
     }
 }

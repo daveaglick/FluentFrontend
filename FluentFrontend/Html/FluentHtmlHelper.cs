@@ -1,8 +1,8 @@
 ﻿namespace FluentFrontend.Html
 {
-    public class FluentHtmlHelper : FluentLibraryHelper
+    public class FluentHtmlHelper : FluentHelper
     {
-        public FluentHtmlHelper(IFluentHelper fluentHelper) : base(fluentHelper)
+        public FluentHtmlHelper(IFluentAdapter adapter) : base(adapter)
         {
         }
     }

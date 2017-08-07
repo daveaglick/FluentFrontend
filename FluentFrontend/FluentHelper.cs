@@ -6,40 +6,30 @@ using System.Text;
 
 namespace FluentFrontend
 {
-    /// <summary>
-    /// Provides the glue between the outside host environment and frontend components.
-    /// Instantiate this directly if you just want to write to a specified <see cref="TextWriter"/>.
-    /// </summary>
-    /// <remarks>
-    /// This class is responsible for creating elements. By
-    /// having the helper create element instances, we can specialize
-    /// the elements for the host enviornment (I.e., by implementing
-    /// interfaces like <c>IHtmlString</c>). To support a new adapter,
-    /// a specialized element class should be created and a specialized
-    /// helper should return instances of the specialized element class.
-    /// </remarks>
     public abstract class FluentHelper : IFluentHelper
     {
-        public TextWriter Writer { get; }
+        private readonly IFluentAdapter _adapter;
 
-        protected FluentHelper(TextWriter writer)
+        protected FluentHelper(IFluentAdapter adapter)
         {
-            Writer = writer ?? throw new ArgumentNullException(nameof(writer));
+            _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
         }
 
-        public virtual IElement<TTag> GetElement<TTag>(TTag tag) 
-            where TTag : class, ITag => 
-            new DefaultElement<TTag>(this, tag);
+        public TextWriter Writer => _adapter.Writer;
+
+        public IElement<TTag> GetElement<TTag>(TTag tag)
+            where TTag : class, ITag =>
+            _adapter.GetElement(this, tag);
 
         public virtual KeyValuePair<string, string> GetAttribute(string name, object value)
         {
             if (value is Enum e)
             {
                 value = new string(
-                    e.ToString()
-                        .ToCharArray()
-                        .SelectMany((c, i) => i != 0 && char.IsUpper(c) ? new[] { '-', c } : new[] { c })
-                        .ToArray())
+                        e.ToString()
+                            .ToCharArray()
+                            .SelectMany((c, i) => i != 0 && char.IsUpper(c) ? new[] { '-', c } : new[] { c })
+                            .ToArray())
                     .ToLower();
             }
             return new KeyValuePair<string, string>(name, value.ToString());

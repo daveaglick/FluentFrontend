@@ -6,17 +6,17 @@ namespace FluentFrontend
     public interface IFluentHelper
     {
         /// <summary>
+        /// The <see cref="TextWriter"/> to write to by default.
+        /// </summary>
+        TextWriter Writer { get; }
+
+        /// <summary>
         /// Constructs an element given a tag.
         /// </summary>
         /// <typeparam name="TTag">The type of tag to create.</typeparam>
         /// <param name="tag">An instance of the specified tag.</param>
         /// <returns>A new element.</returns>
         IElement<TTag> GetElement<TTag>(TTag tag) where TTag : class, ITag;
-
-        /// <summary>
-        /// The <see cref="TextWriter"/> to write to by default.
-        /// </summary>
-        TextWriter Writer { get; }
 
         /// <summary>
         /// Allows the helper to customize how objects are converted to

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class FluentElementHelper : FluentLibraryHelper
+    public class FluentElementHelper : FluentVueHelper
     {
-        public FluentElementHelper(IFluentHelper fluentHelper) : base(fluentHelper)
+        public FluentElementHelper(IFluentAdapter adapter) : base(adapter)
         {
         }
     }

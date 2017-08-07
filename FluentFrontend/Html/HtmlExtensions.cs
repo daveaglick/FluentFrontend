@@ -5,7 +5,7 @@ namespace FluentFrontend.Html
 {
     public static class HtmlExtensions
     {
-        public static FluentHtmlHelper Html(this IFluentHelper helper) => new FluentHtmlHelper(helper);
+        public static FluentHtmlHelper Html(this IFluentAdapter adapter) => new FluentHtmlHelper(adapter);
 
         public static IElement<Tag> P(this FluentHtmlHelper helper) => helper.GetElement(new Tag("p"));
 
