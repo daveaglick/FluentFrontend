@@ -9,19 +9,33 @@ namespace FluentFrontend
     {
         private readonly IFluentHelper _helper;
 
+        public IImmutableDictionary<string, string> Attributes { get; }
+        
+        public IImmutableDictionary<string, string> Styles { get; }
+        
+        public IImmutableSet<string> Classes { get; }
+        
+        public IImmutableList<ElementChild> Children { get; }
+
+        public IImmutableList<IElement> Parents { get; }
+
         internal ElementData(IFluentHelper helper)
         {
             _helper = helper;
             Attributes = ImmutableDictionary<string, string>.Empty;
             Styles = ImmutableDictionary<string, string>.Empty;
             Classes = ImmutableHashSet<string>.Empty;
+            Children = ImmutableList<ElementChild>.Empty;
+            Parents = ImmutableList<IElement>.Empty;
         }
 
-        private ElementData(
+        internal ElementData(
             ElementData data,
             IImmutableDictionary<string, string> attributes = null,
             IImmutableDictionary<string, string> styles = null,
-            IImmutableSet<string> classes = null)
+            IImmutableSet<string> classes = null,
+            IImmutableList<ElementChild> children = null,
+            IImmutableList<IElement> parents = null)
         {
             if (data == null)
             {
@@ -31,19 +45,15 @@ namespace FluentFrontend
             Attributes = attributes ?? data.Attributes;
             Styles = styles ?? data.Styles;
             Classes = classes ?? data.Classes;
+            Children = children ?? data.Children;
+            Parents = parents ?? data.Parents;
         }
-
-        public IImmutableDictionary<string, string> Attributes { get; }
-        
-        public IImmutableDictionary<string, string> Styles { get; }
-        
-        public IImmutableSet<string> Classes { get; }
 
         public ElementData Attribute(string name, object value)
         {
             if (name == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                return this;
             }
 
             // TODO: validate attribute name
@@ -64,7 +74,7 @@ namespace FluentFrontend
         {
             if (name == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                return this;
             }
 
             // TODO: validate style name
@@ -109,5 +119,17 @@ namespace FluentFrontend
                     .SelectMany(x => x.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                     .Where(x => !string.IsNullOrWhiteSpace(x))));
         }
+
+        public ElementData Child(IElement child, ChildPosition position) => 
+            child == null ? this : new ElementData(this, children: Children.Add(new ElementChild(child, position)));
+
+        public ElementData EditChildren(Func<IImmutableList<ElementChild>, IImmutableList<ElementChild>> edit) => 
+            new ElementData(this, children: edit(Children) ?? ImmutableList<ElementChild>.Empty);
+
+        public ElementData Parent(IElement parent) =>
+            parent == null ? this : new ElementData(this, parents: Parents.Add(parent));
+
+        public ElementData EditParents(Func<IImmutableList<IElement>, IImmutableList<IElement>> edit) =>
+            new ElementData(this, parents: edit(Parents) ?? ImmutableList<IElement>.Empty);
     }
 }

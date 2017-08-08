@@ -3,16 +3,18 @@
 @using FluentFrontend.Vue
 @using FluentFrontend.Element
 @using FluentFrontend.Adapter.Mvc
-@using FluentFrontend.Element.Tooltip
 
 @{
     ViewBag.Title = "Home Page";
 }
 
+@model TestWebApp.Models.IndexModel
+
 @using (Html.Fluent().Tag("div").Begin())
 {
     @Html.Fluent().Html().P().Class("foo", "bar").Attribute("fiz", "fuz")
     @Html.Fluent().Element().Tooltip().Effect(TooltipEffect.Light).Disabled(true).Content((BoundValue)"Testing").On("evt", "yay!")
+    @Html.Fluent().Element().DatePickerFor(x => x.Foo)
 }
 
 <div class="jumbotron">

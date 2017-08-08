@@ -39,9 +39,23 @@ namespace FluentFrontend
     public interface IElement<TTag> : IElement
         where TTag : class, ITag
     {
+        string TagName { get; }
+        IImmutableDictionary<string, string> Attributes { get; }
+        IImmutableDictionary<string, string> Styles { get; }
+        IImmutableSet<string> Classes { get; }
+        IImmutableList<ElementChild> Children { get; }
+        IImmutableList<IElement> Parents { get; }
+
         IElement<TTag> Attribute(string name, object value);
         IElement<TTag> Style(string name, string value);
         IElement<TTag> Class(params string[] classes);
+        IElement<TTag> Child(IElement child, ChildPosition position = ChildPosition.AfterOpening);
+        IElement<TTag> Parent(IElement parent);
+        IElement<TTag> Text(string text, ChildPosition position = ChildPosition.AfterOpening);
+        IElement<TTag> Html(string html, ChildPosition position = ChildPosition.AfterOpening);
+
         IElement<TTag> RemoveClass(params string[] classes);
+        IElement<TTag> EditChildren(Func<IImmutableList<ElementChild>, IImmutableList<ElementChild>> edit);
+        IElement<TTag> EditParents(Func<IImmutableList<IElement>, IImmutableList<IElement>> edit);
     }
 }

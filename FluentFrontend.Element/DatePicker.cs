@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using FluentFrontend.Vue;
+﻿using FluentFrontend.Vue;
 
-namespace FluentFrontend.Element.DatePicker
+namespace FluentFrontend.Element
 {
     public class DatePicker : VueTag
     {

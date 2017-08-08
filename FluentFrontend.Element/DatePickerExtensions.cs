@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentFrontend.Vue;
 
-namespace FluentFrontend.Element.DatePicker
+namespace FluentFrontend.Element
 {
     public static class DatePickerExtensions
     {

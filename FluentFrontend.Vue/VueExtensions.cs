@@ -60,7 +60,7 @@ namespace FluentFrontend.Vue
         public static IElement<TTag> Model<TTag>(
             this IElement<TTag> element,
             string model,
-            BindingModifiers? modifiers)
+            BindingModifiers? modifiers = null)
             where TTag : VueTag
         {
             string name = $"v-model";

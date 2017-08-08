@@ -1,4 +1,4 @@
-﻿namespace FluentFrontend.Element.DatePicker
+﻿namespace FluentFrontend.Element
 {
     public enum DatePickerType
     {

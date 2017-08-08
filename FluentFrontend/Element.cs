@@ -41,6 +41,18 @@ namespace FluentFrontend
         }
 
         protected abstract IElement<TTag> Clone(ElementData data);
+        
+        public string TagName => _tag.Name;
+
+        public IImmutableDictionary<string, string> Attributes => _data.Attributes;
+
+        public IImmutableDictionary<string, string> Styles => _data.Styles;
+
+        public IImmutableSet<string> Classes => _data.Classes;
+
+        public IImmutableList<ElementChild> Children => _data.Children;
+
+        public IImmutableList<IElement> Parents => _data.Parents;
 
         public IElement<TTag> Attribute(string name, object value) => Clone(_data.Attribute(name, value));
 
@@ -48,7 +60,25 @@ namespace FluentFrontend
 
         public IElement<TTag> Class(params string[] classes) => Clone(_data.Class(classes));
 
+        public IElement<TTag> Child(IElement child, ChildPosition position = ChildPosition.AfterOpening) => 
+            Clone(_data.Child(child, position));
+
+        public IElement<TTag> Parent(IElement parent) =>
+            Clone(_data.Parent(parent));
+
+        public IElement<TTag> Text(string text, ChildPosition position = ChildPosition.AfterOpening) =>
+            Clone(_data.Child(new ContentElement(_helper, text, true), position));
+
+        public IElement<TTag> Html(string html, ChildPosition position = ChildPosition.AfterOpening) =>
+            Clone(_data.Child(new ContentElement(_helper, html, false), position));
+
         public IElement<TTag> RemoveClass(params string[] classes) => Clone(_data.RemoveClass(classes));
+
+        public IElement<TTag> EditChildren(Func<IImmutableList<ElementChild>, IImmutableList<ElementChild>> edit) => 
+            Clone(_data.EditChildren(edit));
+
+        public IElement<TTag> EditParents(Func<IImmutableList<IElement>, IImmutableList<IElement>> edit) =>
+            Clone(_data.EditParents(edit));
 
         /// <inheritdoc />
         public void Write() => Write(_helper.Writer);
@@ -62,8 +92,30 @@ namespace FluentFrontend
         /// <inheritdoc />
         public IDisposable Begin(TextWriter writer)
         {
+            Stack<IDisposable> parents = new Stack<IDisposable>(_data.Parents.Select(x => x.Begin(writer)));
+            WriteChildren(ChildPosition.BeforeOpening, writer);
             _tag.Begin(writer, _data);
-            return new ActionDisposable(() => _tag.End(writer, _data));
+            WriteChildren(ChildPosition.AfterOpening, writer);
+            return new ActionDisposable(() =>
+            {
+                WriteChildren(ChildPosition.BeforeClosing, writer);
+                _tag.End(writer, _data);
+                WriteChildren(ChildPosition.AfterClosing, writer);
+                foreach (IDisposable parent in parents)
+                {
+                    parent.Dispose();
+                }
+            });
+        }
+
+        private void WriteChildren(ChildPosition position, TextWriter writer)
+        {
+            foreach (IElement child in _data.Children
+                .Where(x => x.Position == position)
+                .Select(x => x.Element))
+            {
+                child.Write(writer);
+            }
         }
 
         public override string ToString()
