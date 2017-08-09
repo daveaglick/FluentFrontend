@@ -9,33 +9,10 @@ namespace FluentFrontend.Element
     public static class ElementExtensions
     {
         public static FluentElementHelper Element(this IFluentAdapter adapter) => new FluentElementHelper(adapter);
-
-        public static IElement<Tooltip> Tooltip(this FluentElementHelper helper) => helper.GetElement(new Tooltip());
-
-        public static IElement<DatePicker> DatePicker(this FluentElementHelper helper) => helper.GetElement(new DatePicker());
-
-        public static IElement<FormItem> FormItem(this FluentElementHelper helper) => helper.GetElement(new FormItem());
-
-        // Model-Bound
-
+        
         public static FluentElementHelper<TModel> Element<TModel>(this IFluentAdapter<TModel> adapter) => new FluentElementHelper<TModel>(adapter);
-
-        public static IElement<DatePicker> DatePickerFor<TModel, TProperty>(
-            this FluentElementHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression,
-            string dataProperty = null,
-            string validationErrorsProperty = "validationErrors",
-            bool formItemWrapper = true,
-            bool tooltipDescription = true) =>
-            helper.DatePicker().For(
-                helper,
-                expression,
-                dataProperty,
-                validationErrorsProperty,
-                formItemWrapper,
-                tooltipDescription);
-
-        private static IElement<TTag> For<TTag, TModel, TProperty>(
+        
+        internal static IElement<TTag> For<TTag, TModel, TProperty>(
             this IElement<TTag> element,
             FluentElementHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression,

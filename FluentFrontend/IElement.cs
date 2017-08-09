@@ -36,10 +36,10 @@ namespace FluentFrontend
         IDisposable Begin(TextWriter writer);
     }
 
-    public interface IElement<TTag> : IElement
+    public interface IElement<out TTag> : IElement
         where TTag : class, ITag
     {
-        string TagName { get; }
+        TTag Tag { get; }
         IImmutableDictionary<string, string> Attributes { get; }
         IImmutableDictionary<string, string> Styles { get; }
         IImmutableSet<string> Classes { get; }

@@ -23,27 +23,26 @@ namespace FluentFrontend
         where TTag : class, ITag
     {
         private readonly IFluentHelper _helper;
-        private readonly TTag _tag;
         private readonly ElementData _data;
+
+        public TTag Tag { get; }
         
         protected Element(IFluentHelper helper, TTag tag)
         {
             _helper = helper ?? throw new ArgumentNullException(nameof(helper));
-            _tag = tag ?? throw new ArgumentNullException(nameof(tag));
+            Tag = tag ?? throw new ArgumentNullException(nameof(tag));
             _data = new ElementData(helper);
         }
 
         protected Element(Element<TTag> element, ElementData data)
         {
             _helper = element?._helper ?? throw new ArgumentNullException(nameof(element));
-            _tag = element._tag;
+            Tag = element.Tag;
             _data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
         protected abstract IElement<TTag> Clone(ElementData data);
         
-        public string TagName => _tag.Name;
-
         public IImmutableDictionary<string, string> Attributes => _data.Attributes;
 
         public IImmutableDictionary<string, string> Styles => _data.Styles;
@@ -94,12 +93,12 @@ namespace FluentFrontend
         {
             Stack<IDisposable> parents = new Stack<IDisposable>(_data.Parents.Select(x => x.Begin(writer)));
             WriteChildren(ChildPosition.BeforeOpening, writer);
-            _tag.Begin(writer, _data);
+            Tag.Begin(writer, _data);
             WriteChildren(ChildPosition.AfterOpening, writer);
             return new ActionDisposable(() =>
             {
                 WriteChildren(ChildPosition.BeforeClosing, writer);
-                _tag.End(writer, _data);
+                Tag.End(writer, _data);
                 WriteChildren(ChildPosition.AfterClosing, writer);
                 foreach (IDisposable parent in parents)
                 {
