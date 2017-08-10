@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FluentFrontend.Vue\FluentFrontend.Vue.csproj" />
-    <ProjectReference Include="..\FluentFrontend\FluentFrontend.csproj" />
+    <ProjectReference Include="..\..\FluentFrontend\FluentFrontend.csproj" />
   </ItemGroup>
 
 </Project>

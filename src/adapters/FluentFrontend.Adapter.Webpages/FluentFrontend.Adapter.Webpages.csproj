@@ -49,7 +49,7 @@
     <Compile Include="FluentWebpagesAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FluentFrontend\FluentFrontend.csproj">
+    <ProjectReference Include="..\..\FluentFrontend\FluentFrontend.csproj">
       <Project>{4a6e7b45-eaee-433b-bfad-9b8eec27ffee}</Project>
       <Name>FluentFrontend</Name>
     </ProjectReference>
