@@ -13,9 +13,9 @@ namespace FluentFrontend
             Writer = writer ?? throw new ArgumentNullException(nameof(writer));
         }
 
-        public virtual IElement<TTag> GetElement<TTag>(IFluentHelper helper, TTag tag) 
+        public virtual IElement<TTag> GetElement<TTag>(TTag tag) 
             where TTag : class, ITag => 
-            new DefaultElement<TTag>(helper, tag);
+            new DefaultElement<TTag>(tag);
     }
 
     /// <summary>
@@ -38,9 +38,9 @@ namespace FluentFrontend
 
         public TextWriter Writer => _adapter.Writer;
 
-        public IElement<TTag> GetElement<TTag>(IFluentHelper helper, TTag tag)
+        public IElement<TTag> GetElement<TTag>(TTag tag)
             where TTag : class, ITag =>
-            _adapter.GetElement(helper, tag);
+            _adapter.GetElement(tag);
 
     }
 }

@@ -6,14 +6,20 @@ using System.Linq;
 
 namespace FluentFrontend
 {
-    public class Tag : ITag
+    public abstract class Tag<THelper> : ITag
+        where THelper : FluentHelper
     {
+        IFluentHelper ITag.Helper => Helper;
+
+        public THelper Helper { get; }
+
         public string Name { get; }
 
         public bool EmptyElement { get; }
 
-        public Tag(string name, bool emptyElement = false)
+        protected Tag(THelper helper, string name, bool emptyElement = false)
         {
+            Helper = helper ?? throw new ArgumentNullException(nameof(helper));
             Name = name ?? throw new ArgumentNullException(nameof(name));
             EmptyElement = emptyElement;
         }

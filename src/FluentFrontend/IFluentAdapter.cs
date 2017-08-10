@@ -15,10 +15,9 @@ namespace FluentFrontend
         /// Constructs an element given a tag.
         /// </summary>
         /// <typeparam name="TTag">The type of tag to create.</typeparam>
-        /// <param name="helper">The current helper class.</param>
         /// <param name="tag">An instance of the specified tag.</param>
         /// <returns>A new element.</returns>
-        IElement<TTag> GetElement<TTag>(IFluentHelper helper, TTag tag) where TTag : class, ITag;
+        IElement<TTag> GetElement<TTag>(TTag tag) where TTag : class, ITag;
     }
 
     public interface IFluentAdapter<TModel> : IFluentAdapter

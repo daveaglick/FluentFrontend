@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Popover : VueTag
+    public class Popover : ElementTag
     {
-        public Popover() : base("el-popover")
+        internal Popover(ElementHelper helper) : base(helper, "el-popover")
         {
         }
     }

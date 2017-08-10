@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class BreadcrumbItem : VueTag
+    public class BreadcrumbItem : ElementTag
     {
-        public BreadcrumbItem() : base("el-breadcrumb-item")
+        internal BreadcrumbItem(ElementHelper helper) : base(helper, "el-breadcrumb-item")
         {
         }
     }

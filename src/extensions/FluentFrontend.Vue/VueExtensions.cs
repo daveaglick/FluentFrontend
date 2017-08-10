@@ -6,7 +6,7 @@ namespace FluentFrontend.Vue
 {
     public static class VueExtensions
     {
-        public static FluentVueHelper Vue(this IFluentAdapter adapter) => new FluentVueHelper(adapter);
+        public static VueHelper Vue(this IFluentAdapter adapter) => new VueHelper(adapter);
 
         // Directives
 
@@ -15,7 +15,7 @@ namespace FluentFrontend.Vue
             string eventName,
             string handler,
             EventModifiers? modifiers = null)
-            where TTag : VueTag
+            where TTag : class, IVueTag
         {
             string name = $"v-on:{eventName}";
             if (modifiers != null)
@@ -32,36 +32,36 @@ namespace FluentFrontend.Vue
         }
 
         public static IElement<TTag> If<TTag>(this IElement<TTag> element, string value)
-            where TTag : VueTag =>
+            where TTag : class, IVueTag =>
             element.Attribute("v-if", value);
 
         public static IElement<TTag> If<TTag>(this IElement<TTag> element, bool value)
-            where TTag : VueTag =>
+            where TTag : class, IVueTag =>
             element.Attribute("v-if", value.ToString().ToLower());
 
         public static IElement<TTag> Show<TTag>(this IElement<TTag> element, string value)
-            where TTag : VueTag =>
+            where TTag : class, IVueTag =>
             element.Attribute("v-show", value);
 
         public static IElement<TTag> Show<TTag>(this IElement<TTag> element, bool value)
-            where TTag : VueTag =>
+            where TTag : class, IVueTag =>
             element.Attribute("v-show", value.ToString().ToLower());
 
         public static IElement<TTag> For<TTag>(this IElement<TTag> element, string data, string item = "item")
-            where TTag : VueTag =>
+            where TTag : class, IVueTag =>
             element.Attribute("v-for", $"{item} in {data}");
 
         // Common Attributes
 
         public static IElement<TTag> Ref<TTag>(this IElement<TTag> element, string referenceId)
-            where TTag : VueTag =>
+            where TTag : class, IVueTag =>
             element.Attribute("ref", referenceId);
 
         public static IElement<TTag> Model<TTag>(
             this IElement<TTag> element,
             string model,
             BindingModifiers? modifiers = null)
-            where TTag : VueTag
+            where TTag : class, IVueTag
         {
             string name = $"v-model";
             if (modifiers != null)
@@ -83,7 +83,7 @@ namespace FluentFrontend.Vue
             this IElement<TTag> element,
             string handler,
             EventModifiers? modifiers = null)
-            where TTag : VueTag =>
+            where TTag : class, IVueTag =>
             element.On("click", handler, modifiers);
     }
 }

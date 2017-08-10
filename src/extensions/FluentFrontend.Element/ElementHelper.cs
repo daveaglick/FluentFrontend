@@ -6,18 +6,18 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class FluentElementHelper : FluentVueHelper
+    public class ElementHelper : VueHelper
     {
-        public FluentElementHelper(IFluentAdapter adapter) : base(adapter)
+        public ElementHelper(IFluentAdapter adapter) : base(adapter)
         {
         }
     }
 
-    public class FluentElementHelper<TModel> : FluentElementHelper
+    public class ElementHelper<TModel> : ElementHelper
     {
         private readonly IFluentAdapter<TModel> _adapter;
 
-        public FluentElementHelper(IFluentAdapter<TModel> adapter) : base(adapter)
+        public ElementHelper(IFluentAdapter<TModel> adapter) : base(adapter)
         {
             _adapter = adapter;
         }

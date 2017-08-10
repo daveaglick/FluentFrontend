@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Input : VueTag
+    public class Input : ElementTag
     {
-        public Input() : base("el-input")
+        internal Input(ElementHelper helper) : base(helper, "el-input")
         {
         }
     }

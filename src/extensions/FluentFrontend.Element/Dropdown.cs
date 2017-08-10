@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Dropdown : VueTag
+    public class Dropdown : ElementTag
     {
-        public Dropdown() : base("el-dropdown")
+        internal Dropdown(ElementHelper helper) : base(helper, "el-dropdown")
         {
         }
     }

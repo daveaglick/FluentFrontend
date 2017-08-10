@@ -5,7 +5,7 @@ namespace FluentFrontend.Adapter.Webpages
     internal class WebpagesElement<TTag> : Element<TTag>, IHtmlString
         where TTag : class, ITag
     {
-        public WebpagesElement(IFluentHelper helper, TTag tag) : base(helper, tag)
+        public WebpagesElement(TTag tag) : base(tag)
         {
         }
 

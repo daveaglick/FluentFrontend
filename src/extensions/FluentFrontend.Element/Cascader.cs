@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Cascader : VueTag
+    public class Cascader : ElementTag
     {
-        public Cascader() : base("el-cascader")
+        internal Cascader(ElementHelper helper) : base(helper, "el-cascader")
         {
         }
     }

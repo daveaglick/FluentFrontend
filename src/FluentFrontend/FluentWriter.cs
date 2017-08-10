@@ -13,8 +13,8 @@ namespace FluentFrontend
             Writer = writer ?? throw new ArgumentNullException(nameof(writer));
         }
 
-        public IElement<TTag> GetElement<TTag>(IFluentHelper helper, TTag tag)
+        public IElement<TTag> GetElement<TTag>(TTag tag)
             where TTag : class, ITag =>
-            new DefaultElement<TTag>(helper, tag);
+            new DefaultElement<TTag>(tag);
     }
 }

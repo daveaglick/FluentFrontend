@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class CollapseItem : VueTag
+    public class CollapseItem : ElementTag
     {
-        public CollapseItem() : base("el-collapse-item")
+        internal CollapseItem(ElementHelper helper) : base(helper, "el-collapse-item")
         {
         }
     }

@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Menu : VueTag
+    public class Menu : ElementTag
     {
-        public Menu() : base("el-menu")
+        internal Menu(ElementHelper helper) : base(helper, "el-menu")
         {
         }
     }

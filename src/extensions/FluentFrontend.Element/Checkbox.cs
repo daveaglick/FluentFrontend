@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Checkbox : VueTag
+    public class Checkbox : ElementTag
     {
-        public Checkbox() : base("el-checkbox")
+        internal Checkbox(ElementHelper helper) : base(helper, "el-checkbox")
         {
         }
     }

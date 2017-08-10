@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Transfer : VueTag
+    public class Transfer : ElementTag
     {
-        public Transfer() : base("el-transfer")
+        internal Transfer(ElementHelper helper) : base(helper, "el-transfer")
         {
         }
     }

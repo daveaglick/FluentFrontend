@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Upload : VueTag
+    public class Upload : ElementTag
     {
-        public Upload() : base("el-upload")
+        internal Upload(ElementHelper helper) : base(helper, "el-upload")
         {
         }
     }

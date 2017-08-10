@@ -2,16 +2,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Form : VueTag
+    public class Form : ElementTag
     {
-        public Form() : base("el-form")
+        internal Form(ElementHelper helper) : base(helper, "el-form")
         {
         }
     }
 
     public static class FormExtensions
     {
-        public static IElement<Form> Form(this FluentElementHelper helper) => helper.GetElement(new Form());
+        public static IElement<Form> Form(this ElementHelper helper) => helper.Adapter.GetElement(new Form(helper));
 
         public static IElement<Form> Model(this IElement<Form> element, BoundValue model) => element.Attribute("model", model);
         public static IElement<Form> Rules(this IElement<Form> element, BoundValue rules) => element.Attribute("rules", rules);

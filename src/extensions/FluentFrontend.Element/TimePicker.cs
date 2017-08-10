@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class TimePicker : VueTag
+    public class TimePicker : ElementTag
     {
-        public TimePicker() : base("el-time-picker")
+        internal TimePicker(ElementHelper helper) : base(helper, "el-time-picker")
         {
         }
     }

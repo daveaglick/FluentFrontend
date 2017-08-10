@@ -8,18 +8,12 @@ namespace FluentFrontend
 {
     public abstract class FluentHelper : IFluentHelper
     {
-        private readonly IFluentAdapter _adapter;
+        public IFluentAdapter Adapter { get; }
 
         protected FluentHelper(IFluentAdapter adapter)
         {
-            _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
+            Adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
         }
-
-        public TextWriter Writer => _adapter.Writer;
-
-        public IElement<TTag> GetElement<TTag>(TTag tag)
-            where TTag : class, ITag =>
-            _adapter.GetElement(this, tag);
 
         public virtual KeyValuePair<string, string> GetAttribute(string name, object value)
         {

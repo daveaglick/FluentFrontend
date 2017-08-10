@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Slider : VueTag
+    public class Slider : ElementTag
     {
-        public Slider() : base("el-slider")
+        internal Slider(ElementHelper helper) : base(helper, "el-slider")
         {
         }
     }

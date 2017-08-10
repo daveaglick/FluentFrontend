@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Progress : VueTag
+    public class Progress : ElementTag
     {
-        public Progress() : base("el-progress")
+        internal Progress(ElementHelper helper) : base(helper, "el-progress")
         {
         }
     }

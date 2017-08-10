@@ -5,10 +5,13 @@ namespace FluentFrontend.Html
 {
     public static class HtmlExtensions
     {
-        public static FluentHtmlHelper Html(this IFluentAdapter adapter) => new FluentHtmlHelper(adapter);
+        public static HtmlHelper Html(this IFluentAdapter adapter) => new HtmlHelper(adapter);
 
-        public static IElement<Tag> P(this FluentHtmlHelper helper) => helper.GetElement(new Tag("p"));
+        public static IElement<HtmlTag> Html(this IFluentAdapter adapter, string name, bool emptyElement = false) =>
+            adapter.GetElement(new HtmlTag(new HtmlHelper(adapter), name, emptyElement));
 
-        public static IElement<Div> Div(this FluentHtmlHelper helper) => helper.GetElement(new Div());
+        public static IElement<HtmlTag> P(this HtmlHelper helper) => helper.Adapter.GetElement(new HtmlTag(helper, "p"));
+
+        public static IElement<HtmlTag> Div(this HtmlHelper helper) => helper.Adapter.GetElement(new HtmlTag(helper, "p"));
     }
 }

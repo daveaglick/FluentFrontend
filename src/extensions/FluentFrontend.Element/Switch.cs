@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Switch : VueTag
+    public class Switch : ElementTag
     {
-        public Switch() : base("el-switch")
+        internal Switch(ElementHelper helper) : base(helper, "el-switch")
         {
         }
     }

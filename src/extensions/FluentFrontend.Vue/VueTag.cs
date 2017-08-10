@@ -1,8 +1,14 @@
 ﻿namespace FluentFrontend.Vue
 {
-    public class VueTag : Tag
+    public interface IVueTag : ITag
     {
-        public VueTag(string name, bool emptyElement = false) : base(name, emptyElement)
+    }
+
+    public abstract class VueTag<THelper> : Tag<THelper>, IVueTag
+        where THelper : VueHelper
+    {
+        protected VueTag(THelper helper, string name, bool emptyElement = false) 
+            : base(helper, name, emptyElement)
         {
         }
     }

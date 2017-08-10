@@ -2,16 +2,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Button : VueTag
+    public class Button : ElementTag
     {
-        public Button() : base("el-button")
+        internal Button(ElementHelper helper) : base(helper, "el-button")
         {
         }
     }
 
     public static class ButtonExtensions
     {
-        public static IElement<Button> Button(this FluentElementHelper helper) => helper.GetElement(new Button());
+        public static IElement<Button> Button(this ElementHelper helper) => helper.Adapter.GetElement(new Button(helper));
 
         public static IElement<Button> Size(this IElement<Button> element, ButtonSize size) => element.Attribute("size", size);
         public static IElement<Button> Size(this IElement<Button> element, BoundValue size) => element.Attribute("size", size);

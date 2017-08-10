@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class RadioButton : VueTag
+    public class RadioButton : ElementTag
     {
-        public RadioButton() : base("el-radio-button")
+        internal RadioButton(ElementHelper helper) : base(helper, "el-radio-button")
         {
         }
     }

@@ -2,16 +2,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Option : VueTag
+    public class Option : ElementTag
     {
-        public Option() : base("el-option")
+        internal Option(ElementHelper helper) : base(helper, "el-option")
         {
         }
     }
 
     public static class OptionExtensions
     {
-        public static IElement<Option> Option(this FluentElementHelper helper) => helper.GetElement(new Option());
+        public static IElement<Option> Option(this ElementHelper helper) => helper.Adapter.GetElement(new Option(helper));
 
         public static IElement<Option> Value(this IElement<Option> element, string value) => element.Attribute("value", value);
         public static IElement<Option> Value(this IElement<Option> element, BoundValue value) => element.Attribute("value", value);

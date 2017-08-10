@@ -2,16 +2,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Table : VueTag
+    public class Table : ElementTag
     {
-        public Table() : base("el-table")
+        internal Table(ElementHelper helper) : base(helper, "el-table")
         {
         }
     }
 
     public static class TableExtensions
     {
-        public static IElement<Table> Table(this FluentElementHelper helper) => helper.GetElement(new Table());
+        public static IElement<Table> Table(this ElementHelper helper) => helper.Adapter.GetElement(new Table(helper));
 
         public static IElement<Table> Data(this IElement<Table> element, BoundValue data) => element.Attribute("data", data);
         public static IElement<Table> Height(this IElement<Table> element, string height) => element.Attribute("height", height);

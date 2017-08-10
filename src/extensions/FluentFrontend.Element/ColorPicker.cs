@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class ColorPicker : VueTag
+    public class ColorPicker : ElementTag
     {
-        public ColorPicker() : base("el-color-picker")
+        internal ColorPicker(ElementHelper helper) : base(helper, "el-color-picker")
         {
         }
     }

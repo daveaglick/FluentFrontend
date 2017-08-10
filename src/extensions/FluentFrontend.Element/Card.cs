@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Card : VueTag
+    public class Card : ElementTag
     {
-        public Card() : base("el-card")
+        internal Card(ElementHelper helper) : base(helper, "el-card")
         {
         }
     }

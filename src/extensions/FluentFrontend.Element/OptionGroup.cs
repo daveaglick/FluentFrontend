@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class OptionGroup : VueTag
+    public class OptionGroup : ElementTag
     {
-        public OptionGroup() : base("el-option-group")
+        internal OptionGroup(ElementHelper helper) : base(helper, "el-option-group")
         {
         }
     }

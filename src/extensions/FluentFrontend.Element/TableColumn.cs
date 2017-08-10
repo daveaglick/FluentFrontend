@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class TableColumn : VueTag
+    public class TableColumn : ElementTag
     {
-        public TableColumn() : base("el-table-column")
+        internal TableColumn(ElementHelper helper) : base(helper, "el-table-column")
         {
         }
     }

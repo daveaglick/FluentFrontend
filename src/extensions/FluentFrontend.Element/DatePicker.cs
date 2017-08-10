@@ -4,19 +4,19 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class DatePicker : VueTag
+    public class DatePicker : ElementTag
     {
-        public DatePicker() : base("el-date-picker")
+        internal DatePicker(ElementHelper helper) : base(helper, "el-date-picker")
         {
         }
     }
 
     public static class DatePickerExtensions
     {
-        public static IElement<DatePicker> DatePicker(this FluentElementHelper helper) => helper.GetElement(new DatePicker());
+        public static IElement<DatePicker> DatePicker(this ElementHelper helper) => helper.Adapter.GetElement(new DatePicker(helper));
 
         public static IElement<DatePicker> DatePickerFor<TModel, TProperty>(
-            this FluentElementHelper<TModel> helper,
+            this ElementHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression,
             string dataProperty = null,
             string validationErrorsProperty = "validationErrors",

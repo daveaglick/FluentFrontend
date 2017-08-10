@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Rate : VueTag
+    public class Rate : ElementTag
     {
-        public Rate() : base("el-rate")
+        internal Rate(ElementHelper helper) : base(helper, "el-rate")
         {
         }
     }

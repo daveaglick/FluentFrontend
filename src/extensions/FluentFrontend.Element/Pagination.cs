@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Pagination : VueTag
+    public class Pagination : ElementTag
     {
-        public Pagination() : base("el-pagination")
+        internal Pagination(ElementHelper helper) : base(helper, "el-pagination")
         {
         }
     }

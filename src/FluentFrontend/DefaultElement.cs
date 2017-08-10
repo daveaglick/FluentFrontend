@@ -8,11 +8,11 @@ namespace FluentFrontend
     internal class DefaultElement<TTag> : Element<TTag>
         where TTag : class, ITag
     {
-        public DefaultElement(IFluentHelper helper, TTag tag) : base(helper, tag)
+        public DefaultElement(TTag tag) : base(tag)
         {
         }
 
-        public DefaultElement(Element<TTag> element, ElementData data) : base(element, data)
+        public DefaultElement(IElement<TTag> element, ElementData data) : base(element, data)
         {
         }
 

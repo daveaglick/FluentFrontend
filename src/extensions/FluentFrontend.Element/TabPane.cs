@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class TabPane : VueTag
+    public class TabPane : ElementTag
     {
-        public TabPane() : base("el-tab-pane")
+        internal TabPane(ElementHelper helper) : base(helper, "el-tab-pane")
         {
         }
     }

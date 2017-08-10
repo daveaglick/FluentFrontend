@@ -5,7 +5,7 @@ namespace FluentFrontend.Adapter.Mvc
     internal class MvcElement<TTag> : Element<TTag>, IHtmlString
         where TTag : class, ITag
     {
-        public MvcElement(IFluentHelper helper, TTag tag) : base(helper, tag)
+        public MvcElement(TTag tag) : base(tag)
         {
         }
 

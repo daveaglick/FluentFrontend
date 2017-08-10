@@ -2,16 +2,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Row : VueTag
+    public class Row : ElementTag
     {
-        public Row() : base("el-row")
+        internal Row(ElementHelper helper) : base(helper, "el-row")
         {
         }
     }
 
     public static class RowExtensions
     {
-        public static IElement<Row> Row(this FluentElementHelper helper) => helper.GetElement(new Row());
+        public static IElement<Row> Row(this ElementHelper helper) => helper.Adapter.GetElement(new Row(helper));
 
         public static IElement<Row> Gutter(this IElement<Row> element, BoundValue<int> gutter) => element.Attribute("gutter", gutter);
         public static IElement<Row> Type(this IElement<Row> element, string type) => element.Attribute("type", type);

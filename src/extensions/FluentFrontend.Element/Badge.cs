@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Badge : VueTag
+    public class Badge : ElementTag
     {
-        public Badge() : base("el-badge")
+        internal Badge(ElementHelper helper) : base(helper, "el-badge")
         {
         }
     }

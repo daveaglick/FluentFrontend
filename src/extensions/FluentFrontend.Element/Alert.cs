@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Alert : VueTag
+    public class Alert : ElementTag
     {
-        public Alert() : base("el-alert")
+        internal Alert(ElementHelper helper) : base(helper, "el-alert")
         {
         }
     }

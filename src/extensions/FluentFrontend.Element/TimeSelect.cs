@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class TimeSelect : VueTag
+    public class TimeSelect : ElementTag
     {
-        public TimeSelect() : base("el-time-select")
+        internal TimeSelect(ElementHelper helper) : base(helper, "el-time-select")
         {
         }
     }

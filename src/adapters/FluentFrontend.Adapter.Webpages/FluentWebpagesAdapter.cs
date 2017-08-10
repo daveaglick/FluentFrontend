@@ -8,9 +8,9 @@ namespace FluentFrontend.Adapter.Webpages
         {
         }
 
-        public override IElement<TTag> GetElement<TTag>(IFluentHelper helper, TTag tag)
+        public override IElement<TTag> GetElement<TTag>(TTag tag)
         {
-            return new WebpagesElement<TTag>(helper, tag);
+            return new WebpagesElement<TTag>(tag);
         }
     }
 }

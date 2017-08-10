@@ -2,16 +2,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Col : VueTag
+    public class Col : ElementTag
     {
-        public Col() : base("el-col")
+        internal Col(ElementHelper helper) : base(helper, "el-col")
         {
         }
     }
 
     public static class ColExtensions
     {
-        public static IElement<Col> Col(this FluentElementHelper helper) => helper.GetElement(new Col());
+        public static IElement<Col> Col(this ElementHelper helper) => helper.Adapter.GetElement(new Col(helper));
 
         public static IElement<Col> Gutter(this IElement<Col> element, BoundValue<int> gutter) => element.Attribute("gutter", gutter);
         public static IElement<Col> Type(this IElement<Col> element, string type) => element.Attribute("type", type);

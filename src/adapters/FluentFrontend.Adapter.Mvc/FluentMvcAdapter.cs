@@ -11,9 +11,9 @@ namespace FluentFrontend.Adapter.Mvc
         {
         }
 
-        public override IElement<TTag> GetElement<TTag>(IFluentHelper helper, TTag tag)
+        public override IElement<TTag> GetElement<TTag>(TTag tag)
         {
-            return new MvcElement<TTag>(helper, tag);
+            return new MvcElement<TTag>(tag);
         }
     }
 

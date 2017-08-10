@@ -22,21 +22,18 @@ namespace FluentFrontend
     public abstract class Element<TTag> : IElement<TTag>
         where TTag : class, ITag
     {
-        private readonly IFluentHelper _helper;
         private readonly ElementData _data;
 
         public TTag Tag { get; }
         
-        protected Element(IFluentHelper helper, TTag tag)
+        protected Element(TTag tag)
         {
-            _helper = helper ?? throw new ArgumentNullException(nameof(helper));
             Tag = tag ?? throw new ArgumentNullException(nameof(tag));
-            _data = new ElementData(helper);
+            _data = new ElementData(tag.Helper);
         }
 
-        protected Element(Element<TTag> element, ElementData data)
+        protected Element(IElement<TTag> element, ElementData data)
         {
-            _helper = element?._helper ?? throw new ArgumentNullException(nameof(element));
             Tag = element.Tag;
             _data = data ?? throw new ArgumentNullException(nameof(data));
         }
@@ -66,10 +63,10 @@ namespace FluentFrontend
             Clone(_data.Parent(parent));
 
         public IElement<TTag> Text(string text, ChildPosition position = ChildPosition.AfterOpening) =>
-            Clone(_data.Child(new ContentElement(_helper, text, true), position));
+            Clone(_data.Child(new ContentElement(Tag.Helper.Adapter.Writer, text, true), position));
 
         public IElement<TTag> Html(string html, ChildPosition position = ChildPosition.AfterOpening) =>
-            Clone(_data.Child(new ContentElement(_helper, html, false), position));
+            Clone(_data.Child(new ContentElement(Tag.Helper.Adapter.Writer, html, false), position));
 
         public IElement<TTag> RemoveClass(params string[] classes) => Clone(_data.RemoveClass(classes));
 
@@ -80,13 +77,13 @@ namespace FluentFrontend
             Clone(_data.EditParents(edit));
 
         /// <inheritdoc />
-        public void Write() => Write(_helper.Writer);
+        public void Write() => Write(Tag.Helper.Adapter.Writer);
 
         /// <inheritdoc />
         public void Write(TextWriter writer) => Begin(writer).Dispose();
 
         /// <inheritdoc />
-        public IDisposable Begin() => Begin(_helper.Writer);
+        public IDisposable Begin() => Begin(Tag.Helper.Adapter.Writer);
 
         /// <inheritdoc />
         public IDisposable Begin(TextWriter writer)

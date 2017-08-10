@@ -2,16 +2,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class FormItem : VueTag
+    public class FormItem : ElementTag
     {
-        public FormItem() : base("el-form-item")
+        internal FormItem(ElementHelper helper) : base(helper, "el-form-item")
         {
         }
     }
 
     public static class FormItemExtensions
     {
-        public static IElement<FormItem> FormItem(this FluentElementHelper helper) => helper.GetElement(new FormItem());
+        public static IElement<FormItem> FormItem(this ElementHelper helper) => helper.Adapter.GetElement(new FormItem(helper));
 
         public static IElement<FormItem> Prop(this IElement<FormItem> element, string prop) => element.Attribute("prop", prop);
         public static IElement<FormItem> Prop(this IElement<FormItem> element, BoundValue prop) => element.Attribute("prop", prop);

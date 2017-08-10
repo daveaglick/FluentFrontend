@@ -6,9 +6,9 @@ using System.Text;
 
 namespace FluentFrontend.Vue
 {
-    public class FluentVueHelper : FluentHelper
+    public class VueHelper : FluentHelper
     {
-        public FluentVueHelper(IFluentAdapter adapter) : base(adapter)
+        public VueHelper(IFluentAdapter adapter) : base(adapter)
         {
         }
 

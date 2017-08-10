@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Autocomplete : VueTag
+    public class Autocomplete : ElementTag
     {
-        public Autocomplete() : base("el-autocomplete")
+        internal Autocomplete(ElementHelper helper) : base(helper, "el-autocomplete")
         {
         }
     }

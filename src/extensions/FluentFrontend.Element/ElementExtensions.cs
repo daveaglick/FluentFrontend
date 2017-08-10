@@ -8,19 +8,19 @@ namespace FluentFrontend.Element
 {
     public static class ElementExtensions
     {
-        public static FluentElementHelper Element(this IFluentAdapter adapter) => new FluentElementHelper(adapter);
+        public static ElementHelper Element(this IFluentAdapter adapter) => new ElementHelper(adapter);
         
-        public static FluentElementHelper<TModel> Element<TModel>(this IFluentAdapter<TModel> adapter) => new FluentElementHelper<TModel>(adapter);
+        public static ElementHelper<TModel> Element<TModel>(this IFluentAdapter<TModel> adapter) => new ElementHelper<TModel>(adapter);
         
         internal static IElement<TTag> For<TTag, TModel, TProperty>(
             this IElement<TTag> element,
-            FluentElementHelper<TModel> helper,
+            ElementHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression,
             string dataProperty, 
             string validationErrorsProperty, 
             bool formItemWrapper, 
             bool tooltipDescription) 
-            where TTag : VueTag
+            where TTag : ElementTag
         {
             if (expression == null)
             {

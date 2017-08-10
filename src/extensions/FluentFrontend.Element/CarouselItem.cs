@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class CarouselItem : VueTag
+    public class CarouselItem : ElementTag
     {
-        public CarouselItem() : base("el-carousel-item")
+        internal CarouselItem(ElementHelper helper) : base(helper, "el-carousel-item")
         {
         }
     }

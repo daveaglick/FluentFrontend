@@ -6,25 +6,25 @@ namespace FluentFrontend
 {
     internal class ContentElement : IElement
     {
-        private readonly IFluentHelper _helper;
+        private readonly TextWriter _writer;
         private readonly string _content;
         private readonly bool _encode;
 
-        public ContentElement(IFluentHelper helper, string content, bool encode)
+        public ContentElement(TextWriter writer, string content, bool encode)
         {
-            _helper = helper;
+            _writer = writer;
             _content = content;
             _encode = encode;
         }
 
         /// <inheritdoc />
-        public void Write() => Write(_helper.Writer);
+        public void Write() => Write(_writer);
 
         /// <inheritdoc />
         public void Write(TextWriter writer) => Begin(writer).Dispose();
 
         /// <inheritdoc />
-        public IDisposable Begin() => Begin(_helper.Writer);
+        public IDisposable Begin() => Begin(_writer);
 
         /// <inheritdoc />
         public IDisposable Begin(TextWriter writer)

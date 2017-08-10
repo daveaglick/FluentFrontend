@@ -5,6 +5,8 @@ namespace FluentFrontend
 {
     public interface ITag
     {
+        IFluentHelper Helper { get; }
+
         string Name { get; }
 
         bool EmptyElement { get; }

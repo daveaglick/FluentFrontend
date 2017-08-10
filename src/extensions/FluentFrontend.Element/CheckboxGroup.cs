@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class CheckboxGroup : VueTag
+    public class CheckboxGroup : ElementTag
     {
-        public CheckboxGroup() : base("el-checkbox-group")
+        internal CheckboxGroup(ElementHelper helper) : base(helper, "el-checkbox-group")
         {
         }
     }

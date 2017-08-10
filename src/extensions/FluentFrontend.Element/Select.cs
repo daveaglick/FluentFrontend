@@ -4,19 +4,16 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Select : VueTag
+    public class Select : ElementTag
     {
-        internal FluentElementHelper Helper { get; }
-
-        public Select(FluentElementHelper helper) : base("el-select")
+        internal Select(ElementHelper helper) : base(helper, "el-select")
         {
-            Helper = helper;
         }
     }
 
     public static class SelectExtensions
     {
-        public static IElement<Select> Select(this FluentElementHelper helper) => helper.GetElement(new Select(helper));
+        public static IElement<Select> Select(this ElementHelper helper) => helper.Adapter.GetElement(new Select(helper));
 
         public static IElement<Select> Multiple(this IElement<Select> element, BoundValue<bool> multiple) => element.Attribute("multiple", multiple);
         public static IElement<Select> Disabled(this IElement<Select> element, BoundValue<bool> disabled) => element.Attribute("disabled", disabled);
@@ -51,7 +48,7 @@ namespace FluentFrontend.Element
             {
                 throw new ArgumentNullException(nameof(property));
             }
-
+            
             IElement<Option> option = element.Tag.Helper.Option().For(property);
 
             if (label != null)

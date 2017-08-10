@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public class Steps : VueTag
+    public class Steps : ElementTag
     {
-        public Steps() : base("el-steps")
+        internal Steps(ElementHelper helper) : base(helper, "el-steps")
         {
         }
     }

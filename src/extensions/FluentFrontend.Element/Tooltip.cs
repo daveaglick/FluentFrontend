@@ -2,16 +2,16 @@
 
 namespace FluentFrontend.Element
 {
-    public class Tooltip : VueTag
+    public class Tooltip : ElementTag
     {
-        public Tooltip() : base("el-tooltip")
+        internal Tooltip(ElementHelper helper) : base(helper, "el-tooltip")
         {
         }
     }
 
     public static class TooltipExtensions
     {
-        public static IElement<Tooltip> Tooltip(this FluentElementHelper helper) => helper.GetElement(new Tooltip());
+        public static IElement<Tooltip> Tooltip(this ElementHelper helper) => helper.Adapter.GetElement(new Tooltip(helper));
 
         public static IElement<Tooltip> Effect(this IElement<Tooltip> element, TooltipEffect effect) => element.Attribute("effect", effect);
         public static IElement<Tooltip> Effect(this IElement<Tooltip> element, BoundValue effect) => element.Attribute("effect", effect);
