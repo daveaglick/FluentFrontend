@@ -8,7 +8,7 @@ namespace FluentFrontend
     /// A simple disposable that calls an action on disposal. This class
     /// will also throw an exception on subsiquent disposals.
     /// </summary>
-    internal class ActionDisposable : IDisposable
+    public class ActionDisposable : IDisposable
     {
         private readonly Action _action;
         private bool _disposed;

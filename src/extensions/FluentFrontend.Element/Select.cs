@@ -97,14 +97,11 @@ namespace FluentFrontend.Element
                 throw new ArgumentNullException(nameof(valueExpression));
             }
 
-            //string label = ModelMetadata.FromLambdaExpression(labelExpression, new ViewDataDictionary<TResult>()).PropertyName;
-            //string value = ModelMetadata.FromLambdaExpression(valueExpression, new ViewDataDictionary<TResult>()).PropertyName;
-            //return Filterable(true)
-            //    .Attribute("remote", string.Empty)
-            //    .Attribute("remote-method", (BoundValue)remoteMethod)
-            //    .Attribute("loading", (BoundValue)loadingProperty)
-            //    .Options(optionsProperty, label, value);
-            return element;
+            return element.Filterable(true)
+                .Attribute("remote", string.Empty)
+                .Attribute("remote-method", (BoundValue)remoteMethod)
+                .Attribute("loading", (BoundValue)loadingProperty)
+                .Options(optionsProperty, labelExpression.GetMemberName(), valueExpression.GetMemberName());
         }
     }
 
