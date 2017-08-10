@@ -14,7 +14,7 @@ namespace FluentFrontend
     public static class ExpressionHelper
     {
         /// <summary>
-        /// Gets the member name in a simple expression of the form <c>x => x.Foo</c>.
+        /// Gets the member name in a simple expression.
         /// </summary>
         /// <typeparam name="T">The type of instance.</typeparam>
         /// <param name="expression">The expression.</param>
@@ -29,7 +29,7 @@ namespace FluentFrontend
         }
 
         /// <summary>
-        /// Gets the member name in a simple expression of the form <c>x => x.Foo()</c>.
+        /// Gets the member name in a simple expression.
         /// </summary>
         /// <typeparam name="T">The type of instance.</typeparam>
         /// <param name="expression">The expression.</param>

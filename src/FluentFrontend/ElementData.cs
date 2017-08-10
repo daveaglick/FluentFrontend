@@ -55,6 +55,9 @@ namespace FluentFrontend
             {
                 return this;
             }
+            
+            // HTML spec requires attribute names to be lowercase
+            name = name.ToLower().Trim();
 
             // TODO: validate attribute name
 
@@ -75,6 +78,15 @@ namespace FluentFrontend
             if (name == null)
             {
                 return this;
+            }
+
+            name = name.Trim();
+            value = value.Trim();
+
+            // Trim a trailing semicolon, it'll be inserted later
+            if (value.EndsWith(";"))
+            {
+                value = value.Substring(0, value.Length - 1);
             }
 
             // TODO: validate style name
@@ -103,6 +115,7 @@ namespace FluentFrontend
                 classes
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .SelectMany(x => x.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+                    .Select(x => x.Trim())
                     .Where(x => !string.IsNullOrWhiteSpace(x))));
         }
 

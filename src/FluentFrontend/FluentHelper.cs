@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace FluentFrontend
@@ -26,7 +27,9 @@ namespace FluentFrontend
                             .ToArray())
                     .ToLower();
             }
-            return new KeyValuePair<string, string>(name, value.ToString());
+            return new KeyValuePair<string, string>(
+                name,
+                WebUtility.HtmlEncode(value.ToString()));  // HTML encoding also works for attributes
         }
     }
 }

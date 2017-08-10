@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Net;
 
 namespace FluentFrontend
 {
@@ -29,35 +30,44 @@ namespace FluentFrontend
             IImmutableDictionary<string, string> attributes = data.Attributes;
 
             // Merge CSS classes
-            if (data.Classes.Count > 0)
+            string[] classes = data.Classes.Concat(
+                attributes.ContainsKey("class")
+                    ? attributes["class"].Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries)
+                    : (IEnumerable<string>) ImmutableList<string>.Empty)
+                    .Distinct()
+                    .OrderBy(x => x)
+                    .ToArray();
+            if (classes.Length > 0)
             {
-                string classes = attributes.ContainsKey("class")
-                    ? $"{attributes["class"]} "
-                    : string.Empty;
-                attributes = attributes.SetItem("class", $"{classes}{string.Join((string)" ", (IEnumerable<string>)data.Classes)}");
+                attributes = attributes.SetItem("class", string.Join(" ", classes));
             }
 
             // Merge inline styles
+            KeyValuePair<string,string>[] styles = data.Styles
+                .Concat(
+                    attributes.ContainsKey("style")
+                        ? attributes["style"]
+                            .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(x => x.Split(':'))
+                            .Select(x => x.Length > 1
+                                ? new KeyValuePair<string, string>(x[0], string.Join(":", x.Skip(1)))
+                                : new KeyValuePair<string, string>(x[0], string.Empty))
+                        : ImmutableList<KeyValuePair<string, string>>.Empty)
+                        .OrderBy(x => x.Key)
+                        .ToArray();
             if (data.Styles.Count > 0)
             {
-                string style = attributes.ContainsKey("style")
-                    ? attributes["style"]
-                    : string.Empty;
-                if (style.Length > 0 && !style.TrimEnd().EndsWith(";"))
-                {
-                    style = $"{style};";
-                }
-                attributes = attributes.SetItem("style", $"{style}{string.Join(string.Empty, data.Styles.Select(x => x.Key + ": " + x.Value + ";"))}");
+                attributes = attributes.SetItem("style", string.Join(string.Empty, data.Styles.Select(x => $"{x.Key}{(x.Value == string.Empty ? string.Empty : ":")}{x.Value};")));
             }
 
             writer.Write("<");
             writer.Write(Name);
-            foreach (KeyValuePair<string, string> attribute in attributes)
+            foreach (KeyValuePair<string, string> attribute in attributes.OrderBy(x => x.Key))
             {
                 writer.Write(" ");
                 writer.Write(attribute.Key);
                 writer.Write("=\"");
-                writer.Write(attribute.Value);  // TODO: escape attribute value
+                writer.Write(attribute.Value);
                 writer.Write("\"");
             }
             writer.WriteLine(">");
