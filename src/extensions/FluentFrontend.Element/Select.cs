@@ -98,7 +98,10 @@ namespace FluentFrontend.Element
                 .Attribute("remote", string.Empty)
                 .Attribute("remote-method", (BoundValue)remoteMethod)
                 .Attribute("loading", (BoundValue)loadingProperty)
-                .Options(optionsProperty, labelExpression.GetMemberName(), valueExpression.GetMemberName());
+                .Options(
+                    optionsProperty,
+                    ExpressionHelper.GetMemberName(labelExpression),
+                    ExpressionHelper.GetMemberName(valueExpression));
         }
     }
 

@@ -22,7 +22,6 @@ namespace FluentFrontend.Element
         public static IElement<Tooltip> Disabled(this IElement<Tooltip> element, BoundValue<bool> disabled) => element.Attribute("disabled", disabled);
         public static IElement<Tooltip> Offset(this IElement<Tooltip> element, BoundValue<int> offset) => element.Attribute("offest", offset);
         public static IElement<Tooltip> OpenDelay(this IElement<Tooltip> element, BoundValue<int> openDelay) => element.Attribute("open-delay", openDelay);
-
     }
 
     public enum TooltipEffect
