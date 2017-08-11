@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FluentFrontend.Tests
 {
@@ -24,7 +25,7 @@ namespace FluentFrontend.Tests
                 }
 
                 // Then
-                Assert.That(output, Is.EqualTo("&lt;foo&gt;"));
+                output.ShouldBe("&lt;foo&gt;");
             }
 
             [Test]
@@ -42,7 +43,7 @@ namespace FluentFrontend.Tests
                 }
 
                 // Then
-                Assert.That(output, Is.EqualTo("<foo>"));
+                output.ShouldBe("<foo>");
             }
         }
     }

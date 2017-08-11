@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FluentFrontend.Tests
 {
@@ -21,7 +22,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div>" + Environment.NewLine));
+                output.ShouldBe("<div>" + Environment.NewLine);
             }
 
             [Test]
@@ -40,7 +41,7 @@ namespace FluentFrontend.Tests
                 }
 
                 // Then
-                Assert.That(output, Is.EqualTo("</div>" + Environment.NewLine));
+                output.ShouldBe("</div>" + Environment.NewLine);
             }
 
             [Test]
@@ -59,7 +60,7 @@ namespace FluentFrontend.Tests
                 }
 
                 // Then
-                Assert.That(output, Is.Empty);
+                output.ShouldBeEmpty();
             }
 
             [Test]
@@ -74,7 +75,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div foo=\"bar\">" + Environment.NewLine));
+                output.ShouldBe("<div foo=\"bar\">" + Environment.NewLine);
             }
 
             [Test]
@@ -89,7 +90,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div foo=\"b&quot;ar\">" + Environment.NewLine));
+                output.ShouldBe("<div foo=\"b&quot;ar\">" + Environment.NewLine);
             }
 
             [Test]
@@ -105,7 +106,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div fizz=\"buzz\" foo=\"bar\">" + Environment.NewLine));
+                output.ShouldBe("<div fizz=\"buzz\" foo=\"bar\">" + Environment.NewLine);
             }
 
             [Test]
@@ -120,7 +121,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div class=\"foo\">" + Environment.NewLine));
+                output.ShouldBe("<div class=\"foo\">" + Environment.NewLine);
             }
 
             [Test]
@@ -135,7 +136,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div class=\"bar foo\">" + Environment.NewLine));
+                output.ShouldBe("<div class=\"bar foo\">" + Environment.NewLine);
             }
 
             [Test]
@@ -151,7 +152,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div class=\"bar buzz fizz foo\">" + Environment.NewLine));
+                output.ShouldBe("<div class=\"bar buzz fizz foo\">" + Environment.NewLine);
             }
 
             [Test]
@@ -166,7 +167,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div class=\"bar foo\">" + Environment.NewLine));
+                output.ShouldBe("<div class=\"bar foo\">" + Environment.NewLine);
             }
 
             [Test]
@@ -181,7 +182,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div style=\"foo:bar;\">" + Environment.NewLine));
+                output.ShouldBe("<div style=\"foo:bar;\">" + Environment.NewLine);
             }
 
             [Test]
@@ -196,7 +197,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div style=\"foo:bar;\">" + Environment.NewLine));
+                output.ShouldBe("<div style=\"foo:bar;\">" + Environment.NewLine);
             }
 
             [Test]
@@ -212,7 +213,39 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div style=\"fizz:buzz;foo:bar;\">" + Environment.NewLine));
+                output.ShouldBe("<div style=\"fizz:buzz;foo:bar;\">" + Environment.NewLine);
+            }
+
+            [Test]
+            public void MixedStyles()
+            {
+                // Given
+                TestTag tag = new TestTag("div");
+                ElementData data = new ElementData(tag.Helper)
+                    .Attribute("style", "foo: bar")
+                    .Style("fizz", "buzz");
+
+                // When
+                string output = Begin(tag, data);
+
+                // Then
+                output.ShouldBe("<div style=\"foo: bar;fizz:buzz;\">" + Environment.NewLine);
+            }
+
+            [Test]
+            public void MixedStylesWithSemicolon()
+            {
+                // Given
+                TestTag tag = new TestTag("div");
+                ElementData data = new ElementData(tag.Helper)
+                    .Attribute("style", "foo: bar;")
+                    .Style("fizz", "buzz");
+
+                // When
+                string output = Begin(tag, data);
+
+                // Then
+                output.ShouldBe("<div style=\"foo: bar;fizz:buzz;\">" + Environment.NewLine);
             }
 
             [Test]
@@ -230,7 +263,7 @@ namespace FluentFrontend.Tests
                 string output = Begin(tag, data);
 
                 // Then
-                Assert.That(output, Is.EqualTo("<div class=\"bar foo\" style=\"a:b;c:d;\">" + Environment.NewLine));
+                output.ShouldBe("<div class=\"bar foo\" style=\"a:b;c:d;\">" + Environment.NewLine);
             }
 
             private string Begin(TestTag tag, ElementData data)

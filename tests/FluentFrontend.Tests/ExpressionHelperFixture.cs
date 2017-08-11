@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Text;
 using NUnit.Framework;
 using FluentFrontend;
+using Shouldly;
 
 namespace FluentFrontend.Tests
 {
@@ -30,7 +31,7 @@ namespace FluentFrontend.Tests
                 string name = ExpressionHelper.GetMemberName<TestClass>(x => x.ValueProp);
 
                 // Then
-                Assert.That(name, Is.EqualTo(nameof(TestClass.ValueProp)));
+                name.ShouldBe(nameof(TestClass.ValueProp));
             }
 
             [Test]
@@ -40,7 +41,7 @@ namespace FluentFrontend.Tests
                 string name = ExpressionHelper.GetMemberName<TestClass>(x => x.ReferenceProp);
 
                 // Then
-                Assert.That(name, Is.EqualTo(nameof(TestClass.ReferenceProp)));
+                name.ShouldBe(nameof(TestClass.ReferenceProp));
             }
 
             [Test]
@@ -50,7 +51,7 @@ namespace FluentFrontend.Tests
                 string name = ExpressionHelper.GetMemberName<TestClass>(x => x.ValueMethod());
 
                 // Then
-                Assert.That(name, Is.EqualTo(nameof(TestClass.ValueMethod)));
+                name.ShouldBe(nameof(TestClass.ValueMethod));
             }
 
             [Test]
@@ -60,7 +61,7 @@ namespace FluentFrontend.Tests
                 string name = ExpressionHelper.GetMemberName<TestClass>(x => x.ReferenceMethod());
 
                 // Then
-                Assert.That(name, Is.EqualTo(nameof(TestClass.ReferenceMethod)));
+                name.ShouldBe(nameof(TestClass.ReferenceMethod));
             }
 
             [Test]
@@ -70,7 +71,7 @@ namespace FluentFrontend.Tests
                 string name = ExpressionHelper.GetMemberName<TestClass>(x => x.ParamMethod(default(int), default(object)));
 
                 // Then
-                Assert.That(name, Is.EqualTo(nameof(TestClass.ParamMethod)));
+                name.ShouldBe(nameof(TestClass.ParamMethod));
             }
 
             [Test]
@@ -80,21 +81,21 @@ namespace FluentFrontend.Tests
                 string name = ExpressionHelper.GetMemberName<TestClass>(x => x.VoidMethod());
 
                 // Then
-                Assert.That(name, Is.EqualTo(nameof(TestClass.VoidMethod)));
+                name.ShouldBe(nameof(TestClass.VoidMethod));
             }
 
             [Test]
             public void ShouldThrowForNullFunc()
             {
                 // Given, When, Then
-                Assert.Throws<ArgumentNullException>(() => ExpressionHelper.GetMemberName<TestClass>((Expression<Func<TestClass, object>>)null));
+                Should.Throw<ArgumentNullException>(() => ExpressionHelper.GetMemberName<TestClass>((Expression<Func<TestClass, object>>)null));
             }
 
             [Test]
             public void ShouldThrowForNullAction()
             {
                 // Given, When, Then
-                Assert.Throws<ArgumentNullException>(() => ExpressionHelper.GetMemberName<TestClass>((Expression<Action<TestClass>>)null));
+                Should.Throw<ArgumentNullException>(() => ExpressionHelper.GetMemberName<TestClass>((Expression<Action<TestClass>>)null));
             }
         }
     }

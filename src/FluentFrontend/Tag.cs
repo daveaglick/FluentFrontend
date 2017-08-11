@@ -43,21 +43,20 @@ namespace FluentFrontend
             }
 
             // Merge inline styles
-            KeyValuePair<string,string>[] styles = data.Styles
-                .Concat(
-                    attributes.ContainsKey("style")
-                        ? attributes["style"]
-                            .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Select(x => x.Split(':'))
-                            .Select(x => x.Length > 1
-                                ? new KeyValuePair<string, string>(x[0], string.Join(":", x.Skip(1)))
-                                : new KeyValuePair<string, string>(x[0], string.Empty))
-                        : ImmutableList<KeyValuePair<string, string>>.Empty)
-                        .OrderBy(x => x.Key)
-                        .ToArray();
             if (data.Styles.Count > 0)
             {
-                attributes = attributes.SetItem("style", string.Join(string.Empty, data.Styles.Select(x => $"{x.Key}{(x.Value == string.Empty ? string.Empty : ":")}{x.Value};")));
+                string style = attributes.ContainsKey("style")
+                    ? attributes["style"].Trim()
+                    : string.Empty;
+                if (style.Length > 0 && !style.EndsWith(";"))
+                {
+                    style += ";";
+                }
+                string styles = string.Join(string.Empty,
+                    data.Styles
+                        .OrderBy(x => x.Key)
+                        .Select(x => $"{x.Key}:{x.Value}{(x.Value.EndsWith(";") ? string.Empty : ";")}"));
+                attributes = attributes.SetItem("style", $"{style}{styles}");
             }
 
             writer.Write("<");
