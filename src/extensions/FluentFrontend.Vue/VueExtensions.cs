@@ -31,6 +31,10 @@ namespace FluentFrontend.Vue
             return element.Attribute(name, handler);
         }
 
+        public static IElement<TTag> Once<TTag>(this IElement<TTag> element, string value)
+            where TTag : class, IVueTag =>
+            element.Attribute("v-once", string.Empty);
+
         public static IElement<TTag> If<TTag>(this IElement<TTag> element, string value)
             where TTag : class, IVueTag =>
             element.Attribute("v-if", value);

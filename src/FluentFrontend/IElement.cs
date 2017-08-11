@@ -45,6 +45,7 @@ namespace FluentFrontend
         IImmutableSet<string> Classes { get; }
         IImmutableList<ElementChild> Children { get; }
         IImmutableList<IElement> Parents { get; }
+        IImmutableDictionary<string, object> TagData { get; }
 
         IElement<TTag> Attribute(string name, object value);
         IElement<TTag> Style(string name, string value);
@@ -53,9 +54,14 @@ namespace FluentFrontend
         IElement<TTag> Parent(IElement parent);
         IElement<TTag> Text(string text, ChildPosition position = ChildPosition.AfterOpening);
         IElement<TTag> Html(string html, ChildPosition position = ChildPosition.AfterOpening);
+        IElement<TTag> Id(string id);
 
         IElement<TTag> RemoveClass(params string[] classes);
         IElement<TTag> EditChildren(Func<IImmutableList<ElementChild>, IImmutableList<ElementChild>> edit);
         IElement<TTag> EditParents(Func<IImmutableList<IElement>, IImmutableList<IElement>> edit);
+
+        IElement<TTag> SetTagData(string key, object value);
+        IElement<TTag> SetTagData(string key, Func<object, object> valueFunc, object defaultValue = null);
+        IElement<TTag> SetTagData<TValue>(string key, Func<TValue, TValue> valueFunc, TValue defaultValue = default(TValue));
     }
 }

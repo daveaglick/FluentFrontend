@@ -50,6 +50,8 @@ namespace FluentFrontend
 
         public IImmutableList<IElement> Parents => _data.Parents;
 
+        public IImmutableDictionary<string, object> TagData => _data.TagData;
+
         public IElement<TTag> Attribute(string name, object value) => Clone(_data.Attribute(name, value));
 
         public IElement<TTag> Style(string name, string value) => Clone(_data.Style(name, value));
@@ -75,6 +77,16 @@ namespace FluentFrontend
 
         public IElement<TTag> EditParents(Func<IImmutableList<IElement>, IImmutableList<IElement>> edit) =>
             Clone(_data.EditParents(edit));
+
+        public IElement<TTag> SetTagData(string key, object value) => Clone(_data.SetTagData(key, value));
+
+        public IElement<TTag> SetTagData(string key, Func<object, object> valueFunc, object defaultValue = null) =>
+            Clone(_data.SetTagData(key, valueFunc, defaultValue));
+
+        public IElement<TTag> SetTagData<TValue>(string key, Func<TValue, TValue> valueFunc, TValue defaultValue = default(TValue)) =>
+            Clone(_data.SetTagData(key, valueFunc, defaultValue));
+
+        public IElement<TTag> Id(string id) => Attribute("id", id);
 
         /// <inheritdoc />
         public void Write() => Write(Tag.Helper.Adapter.Writer);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Xml;
 
 namespace FluentFrontend
 {
@@ -19,6 +20,8 @@ namespace FluentFrontend
 
         public IImmutableList<IElement> Parents { get; }
 
+        public IImmutableDictionary<string, object> TagData { get; }
+
         internal ElementData(IFluentHelper helper)
         {
             _helper = helper;
@@ -27,6 +30,7 @@ namespace FluentFrontend
             Classes = ImmutableHashSet<string>.Empty;
             Children = ImmutableList<ElementChild>.Empty;
             Parents = ImmutableList<IElement>.Empty;
+            TagData = ImmutableDictionary<string, object>.Empty;
         }
 
         internal ElementData(
@@ -35,7 +39,8 @@ namespace FluentFrontend
             IImmutableDictionary<string, string> styles = null,
             IImmutableSet<string> classes = null,
             IImmutableList<ElementChild> children = null,
-            IImmutableList<IElement> parents = null)
+            IImmutableList<IElement> parents = null,
+            IImmutableDictionary<string, object> tagData = null)
         {
             if (data == null)
             {
@@ -47,6 +52,7 @@ namespace FluentFrontend
             Classes = classes ?? data.Classes;
             Children = children ?? data.Children;
             Parents = parents ?? data.Parents;
+            TagData = tagData ?? data.TagData;
         }
 
         public ElementData Attribute(string name, object value)
@@ -59,8 +65,17 @@ namespace FluentFrontend
             // HTML spec requires attribute names to be lowercase
             name = name.ToLower().Trim();
 
-            // TODO: validate attribute name
+            // Validate attribute name (using XML rules, but close enough)
+            try
+            {
+                XmlConvert.VerifyName(name);
+            }
+            catch (XmlException ex)
+            {
+                throw new ArgumentException($"Invalid attribute name: {ex.Message}");
+            }
 
+            // Remove if null, set if non-null
             if (value == null && Attributes.ContainsKey(name))
             {
                 return new ElementData(this, attributes: Attributes.Remove(name));
@@ -89,8 +104,6 @@ namespace FluentFrontend
                 value = value.Substring(0, value.Length - 1);
             }
 
-            // TODO: validate style name
-
             if (value == null && Styles.ContainsKey(name))
             {
                 return new ElementData(this, styles: Styles.Remove(name));
@@ -108,8 +121,6 @@ namespace FluentFrontend
             {
                 return this;
             }
-
-            // TODO: validate class name
 
             return new ElementData(this, classes: Classes.Union(
                 classes
@@ -144,5 +155,13 @@ namespace FluentFrontend
 
         public ElementData EditParents(Func<IImmutableList<IElement>, IImmutableList<IElement>> edit) =>
             new ElementData(this, parents: edit(Parents) ?? ImmutableList<IElement>.Empty);
+
+        public ElementData SetTagData(string key, object value) => new ElementData(this, tagData: TagData.SetItem(key, value));
+
+        public ElementData SetTagData(string key, Func<object, object> valueFunc, object defaultValue = null) =>
+            new ElementData(this, tagData: TagData.SetItem(key, valueFunc(TagData.GetValueOrDefault(key, defaultValue))));
+
+        public ElementData SetTagData<TValue>(string key, Func<TValue, TValue> valueFunc, TValue defaultValue = default(TValue)) =>
+            new ElementData(this, tagData: TagData.SetItem(key, valueFunc((TValue)TagData.GetValueOrDefault(key, defaultValue))));
     }
 }
