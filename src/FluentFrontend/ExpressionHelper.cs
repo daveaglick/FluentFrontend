@@ -32,6 +32,22 @@ namespace FluentFrontend
         /// Gets the member name in a simple expression.
         /// </summary>
         /// <typeparam name="T">The type of instance.</typeparam>
+        /// <typeparam name="TProperty">The type of property.</typeparam>
+        /// <param name="expression">The expression.</param>
+        /// <returns>The name of the member.</returns>
+        public static string GetMemberName<T, TProperty>(Expression<Func<T, TProperty>> expression)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+            return GetMemberName(expression.Body);
+        }
+
+        /// <summary>
+        /// Gets the member name in a simple expression.
+        /// </summary>
+        /// <typeparam name="T">The type of instance.</typeparam>
         /// <param name="expression">The expression.</param>
         /// <returns>The name of the member.</returns>
         public static string GetMemberName<T>(Expression<Action<T>> expression)

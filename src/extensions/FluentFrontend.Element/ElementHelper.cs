@@ -15,14 +15,11 @@ namespace FluentFrontend.Element
 
     public class ElementHelper<TModel> : ElementHelper
     {
-        private readonly IFluentAdapter<TModel> _adapter;
+        internal new IFluentAdapter<TModel> Adapter { get; }
 
         public ElementHelper(IFluentAdapter<TModel> adapter) : base(adapter)
         {
-            _adapter = adapter;
+            Adapter = adapter;
         }
-
-        internal IModelMetadata GetModelMetadata<TProperty>(Expression<Func<TModel, TProperty>> expression) =>
-            _adapter.GetModelMetadata(expression);
     }
 }

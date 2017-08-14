@@ -16,6 +16,9 @@ namespace FluentFrontend
         public virtual IElement<TTag> GetElement<TTag>(TTag tag) 
             where TTag : class, ITag => 
             new DefaultElement<TTag>(tag);
+
+        public virtual IModelMetadata GetModelMetadata<TModel, TProperty>(Expression<Func<TModel, TProperty>> expression) =>
+            new ModelMetadata<TModel, TProperty>(expression);
     }
 
     /// <summary>
@@ -34,7 +37,6 @@ namespace FluentFrontend
 
         public TModel Model { get; }
 
-        public abstract IModelMetadata GetModelMetadata<TProperty>(Expression<Func<TModel, TProperty>> expression);
 
         public TextWriter Writer => _adapter.Writer;
 
@@ -42,5 +44,10 @@ namespace FluentFrontend
             where TTag : class, ITag =>
             _adapter.GetElement(tag);
 
+        public virtual IModelMetadata GetModelMetadata<TProperty>(Expression<Func<TModel, TProperty>> expression) =>
+            GetModelMetadata<TModel, TProperty>(expression);
+
+        public virtual IModelMetadata GetModelMetadata<TMetadataModel, TProperty>(Expression<Func<TMetadataModel, TProperty>> expression) =>
+            new ModelMetadata<TMetadataModel, TProperty>(expression);
     }
 }

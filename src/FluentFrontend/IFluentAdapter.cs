@@ -18,6 +18,8 @@ namespace FluentFrontend
         /// <param name="tag">An instance of the specified tag.</param>
         /// <returns>A new element.</returns>
         IElement<TTag> GetElement<TTag>(TTag tag) where TTag : class, ITag;
+
+        IModelMetadata GetModelMetadata<TModel, TProperty>(Expression<Func<TModel, TProperty>> expression);
     }
 
     public interface IFluentAdapter<TModel> : IFluentAdapter

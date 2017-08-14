@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace FluentFrontend.Vue
@@ -50,6 +51,15 @@ namespace FluentFrontend.Vue
             
             return false;
         }
+    }
 
+    public class VueHelper<TModel> : VueHelper
+    {
+        internal new IFluentAdapter<TModel> Adapter { get; }
+
+        public VueHelper(IFluentAdapter<TModel> adapter) : base(adapter)
+        {
+            Adapter = adapter;
+        }
     }
 }

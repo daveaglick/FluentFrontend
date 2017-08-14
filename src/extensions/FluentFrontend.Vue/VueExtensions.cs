@@ -8,6 +8,8 @@ namespace FluentFrontend.Vue
     {
         public static VueHelper Vue(this IFluentAdapter adapter) => new VueHelper(adapter);
 
+        public static VueHelper<TModel> Vue<TModel>(this IFluentAdapter<TModel> adapter) => new VueHelper<TModel>(adapter);
+
         // Directives
 
         public static IElement<TTag> On<TTag>(

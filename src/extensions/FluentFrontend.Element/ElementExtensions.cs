@@ -14,7 +14,7 @@ namespace FluentFrontend.Element
         
         internal static IElement<TTag> For<TTag, TModel, TProperty>(
             this IElement<TTag> element,
-            ElementHelper<TModel> helper,
+            ElementHelper helper,
             Expression<Func<TModel, TProperty>> expression,
             string dataProperty, 
             string validationErrorsProperty, 
@@ -27,7 +27,7 @@ namespace FluentFrontend.Element
                 throw new ArgumentNullException(nameof(expression));
             }
 
-            IModelMetadata metadata = helper.GetModelMetadata(expression);
+            IModelMetadata metadata = helper.Adapter.GetModelMetadata(expression);
             if (metadata == null)
             {
                 throw new Exception("Could not get model metadata.");
