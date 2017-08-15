@@ -11,7 +11,11 @@ namespace FluentFrontend.Element
         public static ElementHelper Element(this IFluentAdapter adapter) => new ElementHelper(adapter);
         
         public static ElementHelper<TModel> Element<TModel>(this IFluentAdapter<TModel> adapter) => new ElementHelper<TModel>(adapter);
-        
+
+        public static VueElementHelper Element(this VueHelper vue) => new VueElementHelper(vue.Adapter, vue);
+
+        public static VueElementHelper<TModel> Element<TModel>(this VueHelper<TModel> vue) => new VueElementHelper<TModel>(vue.Adapter, vue);
+
         internal static IElement<TTag> For<TTag, TModel, TProperty>(
             this IElement<TTag> element,
             ElementHelper helper,

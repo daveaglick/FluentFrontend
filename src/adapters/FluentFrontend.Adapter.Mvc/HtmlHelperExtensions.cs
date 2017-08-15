@@ -9,16 +9,15 @@ namespace FluentFrontend.Adapter.Mvc
 {
     public static class HtmlHelperExtensions
     {
-        public static IFluentAdapter Fluent(this HtmlHelper htmlHelper)
-        {
-            return new FluentMvcAdapter(htmlHelper.ViewContext.Writer);
-        }
+        public static IFluentAdapter<dynamic> Fluent(this HtmlHelper htmlHelper) => 
+            new FluentMvcAdapter<dynamic>(htmlHelper.ViewContext.Writer, null);
 
-        public static IFluentAdapter<TModel> Fluent<TModel>(this HtmlHelper<TModel> htmlHelper)
-        {
-            return new FluentMvcAdapter<TModel>(
+        public static IFluentAdapter<TModel> Fluent<TModel>(this HtmlHelper htmlHelper, TModel model) => 
+            new FluentMvcAdapter<TModel>(htmlHelper.ViewContext.Writer, model);
+
+        public static IFluentAdapter<TModel> Fluent<TModel>(this HtmlHelper<TModel> htmlHelper) => 
+            new FluentMvcAdapter<TModel>(
                 htmlHelper.ViewContext.Writer,
                 htmlHelper.ViewData == null ? default(TModel) : htmlHelper.ViewData.Model);
-        }
     }
 }

@@ -15,11 +15,8 @@ namespace FluentFrontend.Element
 
     public class ElementHelper<TModel> : ElementHelper
     {
-        internal new IFluentAdapter<TModel> Adapter { get; }
-
-        public ElementHelper(IFluentAdapter<TModel> adapter) : base(adapter)
+        public ElementHelper(IFluentAdapter adapter) : base(adapter)
         {
-            Adapter = adapter;
         }
     }
 }

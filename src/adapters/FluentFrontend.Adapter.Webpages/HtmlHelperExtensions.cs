@@ -11,9 +11,22 @@ namespace FluentFrontend.Adapter.Webpages
 {
     public static class HtmlHelperExtensions
     {
-        public static IFluentAdapter Fluent(this HtmlHelper htmlHelper, WebPageBase webPageBase)
+        public static IFluentAdapter<dynamic> Fluent(this HtmlHelper htmlHelper, WebPageBase webPageBase)
         {
-            return new FluentWebpagesAdapter(webPageBase.Output);
+            if (webPageBase == null)
+            {
+                throw new ArgumentNullException(nameof(webPageBase));
+            }
+            return new FluentWebpagesAdapter<dynamic>(webPageBase.Output, null);
+        }
+
+        public static IFluentAdapter<TModel> Fluent<TModel>(this HtmlHelper htmlHelper, WebPageBase webPageBase, TModel model)
+        {
+            if (webPageBase == null)
+            {
+                throw new ArgumentNullException(nameof(webPageBase));
+            }
+            return new FluentWebpagesAdapter<TModel>(webPageBase.Output, model);
         }
     }
 }

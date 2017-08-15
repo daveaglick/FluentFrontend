@@ -32,22 +32,6 @@ namespace FluentFrontend.Element
                 formItemWrapper,
                 tooltipDescription);
 
-        public static IElement<DatePicker> DatePickerFor<TModel, TProperty>(
-            this ElementHelper helper,
-            IElement<VueInstance<TModel>> vueInstance,
-            Expression<Func<TModel, TProperty>> expression,
-            string dataProperty = null,
-            string validationErrorsProperty = "validationErrors",
-            bool formItemWrapper = true,
-            bool tooltipDescription = true) =>
-            helper.DatePicker().For(
-                helper,
-                expression,
-                dataProperty,
-                validationErrorsProperty,
-                formItemWrapper,
-                tooltipDescription);
-
         // Attributes
 
         public static IElement<DatePicker> Readonly(this IElement<DatePicker> element, BoundValue<bool> @readonly) => element.Attribute("readonly", @readonly);

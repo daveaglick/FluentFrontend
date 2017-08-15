@@ -14,7 +14,7 @@ namespace FluentFrontend.Vue
         {
             public const string InstanceName = nameof(InstanceName);
             public const string ElementId = nameof(ElementId);
-            public const string VueModel = nameof(VueModel);
+            public const string Data = nameof(Data);
         }
 
         internal VueInstance(VueHelper helper) : base(helper, "script")
@@ -71,7 +71,7 @@ namespace FluentFrontend.Vue
 
         private string GetVueModel(ElementData data)
         {
-            if (!data.TagData.TryGetValue(TagDataKeys.VueModel, out object vueModel))
+            if (!data.TagData.TryGetValue(TagDataKeys.Data, out object vueModel))
             {
                 return null;
             }
@@ -100,13 +100,6 @@ namespace FluentFrontend.Vue
         }
     }
 
-    public class VueInstance<TModel> : VueInstance
-    {
-        internal VueInstance(VueHelper helper) : base(helper)
-        {
-        }
-    }
-
     public static class VueInstanceExtensions
     {
         // Element
@@ -114,36 +107,23 @@ namespace FluentFrontend.Vue
         public static IElement<VueInstance> Instance(this VueHelper helper, string instanceName = "vm", string elementId = "app") => 
             helper.Adapter.GetElement(new VueInstance(helper)).InstanceName(instanceName).ElementId(elementId);
 
-        public static IElement<VueInstance<TModel>> Instance<TModel>(this VueHelper helper, string instanceName = "vm", string elementId = "app")
-            where TModel : class => 
-            helper.Adapter.GetElement(new VueInstance<TModel>(helper)).VueModel(Activator.CreateInstance<TModel>()).InstanceName(instanceName).ElementId(elementId);
-
-        public static IElement<VueInstance<TModel>> Instance<TModel>(this VueHelper helper, TModel vueModel, string instanceName = "vm", string elementId = "app")
-            where TModel : class => 
-            helper.Adapter.GetElement(new VueInstance<TModel>(helper)).VueModel(vueModel).InstanceName(instanceName).ElementId(elementId);
-
-        public static IElement<VueInstance<TModel>> Instance<TModel>(this VueHelper<TModel> helper, string instanceName = "vm", string elementId = "app")
+        public static IElement<VueInstance> Instance<TModel>(this VueHelper<TModel> helper, string instanceName = "vm", string elementId = "app")
             where TModel : class =>
-            helper.Adapter.GetElement(new VueInstance<TModel>(helper)).VueModel(helper.Adapter.Model ?? Activator.CreateInstance<TModel>()).InstanceName(instanceName).ElementId(elementId);
-
-        public static IElement<VueInstance<TModel>> Instance<TModel>(this VueHelper<TModel> helper, TModel vueModel, string instanceName = "vm", string elementId = "app")
-            where TModel : class =>
-            helper.Adapter.GetElement(new VueInstance<TModel>(helper)).VueModel(vueModel).InstanceName(instanceName).ElementId(elementId);
+            helper.Adapter.GetElement(new VueInstance(helper)).InstanceName(instanceName).ElementId(elementId).Data(helper.Adapter.Model);
 
         // Data
 
-        public static IElement<TInstance> InstanceName<TInstance>(this IElement<TInstance> element, string instanceName)
-            where TInstance : VueInstance
-            => element.SetTagData(Vue.VueInstance.TagDataKeys.InstanceName, instanceName?.Trim());
+        public static IElement<VueInstance> InstanceName(this IElement<VueInstance> element, string instanceName) =>
+            element.SetTagData(VueInstance.TagDataKeys.InstanceName, instanceName?.Trim());
 
-        public static IElement<TInstance> ElementId<TInstance>(this IElement<TInstance> element, string elementId)
-            where TInstance : VueInstance =>
-            element.SetTagData(Vue.VueInstance.TagDataKeys.ElementId, elementId?.Trim());
+        public static IElement<VueInstance> ElementId(this IElement<VueInstance> element, string elementId) =>
+            element.SetTagData(VueInstance.TagDataKeys.ElementId, elementId?.Trim());
 
-        public static IElement<VueInstance> VueModel(this IElement<VueInstance> element, string vueModelScript) => element.SetTagData(Vue.VueInstance.TagDataKeys.VueModel, vueModelScript);
+        public static IElement<VueInstance> Data(this IElement<VueInstance> element, string dataScript) => 
+            element.SetTagData(VueInstance.TagDataKeys.Data, dataScript);
 
-        public static IElement<VueInstance<TModel>> VueModel<TModel>(this IElement<VueInstance<TModel>> element, TModel vueModel)
-            where TModel : class =>
-            element.SetTagData(Vue.VueInstance.TagDataKeys.VueModel, vueModel);
+        public static IElement<VueInstance> Data<TModel>(this IElement<VueInstance> element, TModel model = null)
+            where TModel : class => 
+            element.SetTagData(VueInstance.TagDataKeys.Data, model ?? Activator.CreateInstance<TModel>());
     }
 }

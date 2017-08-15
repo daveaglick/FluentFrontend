@@ -4,8 +4,6 @@
 @using FluentFrontend.Element
 @using FluentFrontend.Adapter.Mvc
 
-<script src="https://unpkg.com/vue"></script>
-
 @{
     ViewBag.Title = "Home Page";
 }
@@ -13,13 +11,17 @@
 @model TestWebApp.Models.IndexModel
 
 @{
-    var vue = Html.Fluent().Vue().Instance();
-    using (Html.Fluent().Vue().App().Begin())
+    var vue = Html.Fluent(new
     {
-        using (Html.Fluent().Element().Form().Begin())
+        Model,
+        ValidationErrors = new object[] {}
+    }).Vue();
+    using (vue.App().Begin())
+    {
+        using (vue.Element().Form().Begin())
         {
-            Html.Fluent().Element().DatePickerFor(vue, x => x.Foo).Write();
+            vue.Element().DatePickerFor(x => x.Model.Foo).Write();
         }
     }
-    vue.Write();
+    vue.Instance().Write();
 }
