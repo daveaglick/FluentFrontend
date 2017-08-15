@@ -4,7 +4,7 @@ namespace FluentFrontend.Element
 {
     public class Col : ElementTag
     {
-        internal Col(ElementHelper helper) : base(helper, "el-col")
+        internal Col(IElementHelper helper) : base(helper, "el-col")
         {
         }
     }
@@ -13,7 +13,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<Col> Col(this ElementHelper helper) => helper.Adapter.GetElement(new Col(helper));
+        public static IElement<Col> Col(this IElementHelper helper) => helper.Adapter.GetElement(new Col(helper));
 
         // Attributes
 

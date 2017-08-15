@@ -7,9 +7,9 @@ using System.Text;
 
 namespace FluentFrontend.Vue
 {
-    public class VueHelper : FluentHelper
+    public class VueHelper<TModel> : FluentHelper<TModel>, IVueHelper
     {
-        public VueHelper(IFluentAdapter adapter) : base(adapter)
+        public VueHelper(IFluentAdapter<TModel> adapter) : base(adapter)
         {
         }
 
@@ -50,16 +50,6 @@ namespace FluentFrontend.Vue
             }
             
             return false;
-        }
-    }
-
-    public class VueHelper<TModel> : VueHelper
-    {
-        internal new IFluentAdapter<TModel> Adapter { get; }
-
-        public VueHelper(IFluentAdapter<TModel> adapter) : base(adapter)
-        {
-            Adapter = adapter;
         }
     }
 }

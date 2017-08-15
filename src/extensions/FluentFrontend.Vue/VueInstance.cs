@@ -8,7 +8,7 @@ namespace FluentFrontend.Vue
     {
     }
 
-    public class VueInstance : Tag<VueHelper>, IVueInstance
+    public class VueInstance : Tag<IVueHelper>, IVueInstance
     {
         public static class TagDataKeys
         {
@@ -17,7 +17,7 @@ namespace FluentFrontend.Vue
             public const string Data = nameof(Data);
         }
 
-        internal VueInstance(VueHelper helper) : base(helper, "script")
+        internal VueInstance(IVueHelper helper) : base(helper, "script")
         {
         }
 
@@ -103,13 +103,12 @@ namespace FluentFrontend.Vue
     public static class VueInstanceExtensions
     {
         // Element
-
-        public static IElement<VueInstance> Instance(this VueHelper helper, string instanceName = "vm", string elementId = "app") => 
-            helper.Adapter.GetElement(new VueInstance(helper)).InstanceName(instanceName).ElementId(elementId);
-
-        public static IElement<VueInstance> Instance<TModel>(this VueHelper<TModel> helper, string instanceName = "vm", string elementId = "app")
+        
+        public static IElement<VueInstance> Instance<TModel>(
+            this VueHelper<TModel> helper, string instanceName = "vm", string elementId = "app")
             where TModel : class =>
-            helper.Adapter.GetElement(new VueInstance(helper)).InstanceName(instanceName).ElementId(elementId).Data(helper.Adapter.Model);
+            helper.Adapter.GetElement(new VueInstance(helper))
+                .InstanceName(instanceName).ElementId(elementId).Data(helper.Adapter.Model);
 
         // Data
 

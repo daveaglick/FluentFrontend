@@ -4,7 +4,7 @@ namespace FluentFrontend.Element
 {
     public class Table : ElementTag
     {
-        internal Table(ElementHelper helper) : base(helper, "el-table")
+        internal Table(IElementHelper helper) : base(helper, "el-table")
         {
         }
     }
@@ -13,7 +13,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<Table> Table(this ElementHelper helper) => helper.Adapter.GetElement(new Table(helper));
+        public static IElement<Table> Table(this IElementHelper helper) => helper.Adapter.GetElement(new Table(helper));
 
         // Attributes
 

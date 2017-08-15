@@ -1,8 +1,10 @@
-﻿namespace FluentFrontend.Tests
+﻿using System.Collections.Generic;
+
+namespace FluentFrontend.Tests
 {
-    public class TestHelper : FluentHelper
+    public class TestHelper<TModel> : FluentHelper<TModel>
     {
-        public TestHelper(IFluentAdapter adapter) : base(adapter)
+        public TestHelper(IFluentAdapter<TModel> adapter) : base(adapter)
         {
         }
     }

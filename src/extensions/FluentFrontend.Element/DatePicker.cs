@@ -6,7 +6,7 @@ namespace FluentFrontend.Element
 {
     public class DatePicker : ElementTag
     {
-        internal DatePicker(ElementHelper helper) : base(helper, "el-date-picker")
+        internal DatePicker(IElementHelper helper) : base(helper, "el-date-picker")
         {
         }
     }
@@ -15,7 +15,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<DatePicker> DatePicker(this ElementHelper helper) => helper.Adapter.GetElement(new DatePicker(helper));
+        public static IElement<DatePicker> DatePicker(this IElementHelper helper) => helper.Adapter.GetElement(new DatePicker(helper));
 
         public static IElement<DatePicker> DatePickerFor<TModel, TProperty>(
             this ElementHelper<TModel> helper,

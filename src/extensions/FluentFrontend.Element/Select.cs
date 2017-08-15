@@ -6,7 +6,7 @@ namespace FluentFrontend.Element
 {
     public class Select : ElementTag
     {
-        internal Select(ElementHelper helper) : base(helper, "el-select")
+        internal Select(IElementHelper helper) : base(helper, "el-select")
         {
         }
     }
@@ -15,7 +15,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<Select> Select(this ElementHelper helper) => helper.Adapter.GetElement(new Select(helper));
+        public static IElement<Select> Select(this IElementHelper helper) => helper.Adapter.GetElement(new Select(helper));
 
         // Attributes
 

@@ -4,7 +4,7 @@ namespace FluentFrontend.Element
 {
     public class Option : ElementTag
     {
-        internal Option(ElementHelper helper) : base(helper, "el-option")
+        internal Option(IElementHelper helper) : base(helper, "el-option")
         {
         }
     }
@@ -13,7 +13,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<Option> Option(this ElementHelper helper) => helper.Adapter.GetElement(new Option(helper));
+        public static IElement<Option> Option(this IElementHelper helper) => helper.Adapter.GetElement(new Option(helper));
 
         // Attributes
 

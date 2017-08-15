@@ -4,7 +4,7 @@ namespace FluentFrontend.Element
 {
     public class TableColumn : ElementTag
     {
-        internal TableColumn(ElementHelper helper) : base(helper, "el-table-column")
+        internal TableColumn(IElementHelper helper) : base(helper, "el-table-column")
         {
         }
     }
@@ -12,7 +12,7 @@ namespace FluentFrontend.Element
     public static class TableColumnExtensions
     {
         // Element
-        public static IElement<TableColumn> TableColumn(this ElementHelper helper) => helper.Adapter.GetElement(new TableColumn(helper));
+        public static IElement<TableColumn> TableColumn(this IElementHelper helper) => helper.Adapter.GetElement(new TableColumn(helper));
 
         // Attributes
 

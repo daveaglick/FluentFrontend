@@ -4,7 +4,7 @@ namespace FluentFrontend.Element
 {
     public class Form : ElementTag
     {
-        internal Form(ElementHelper helper) : base(helper, "el-form")
+        internal Form(IElementHelper helper) : base(helper, "el-form")
         {
         }
     }
@@ -13,7 +13,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<Form> Form(this ElementHelper helper) => helper.Adapter.GetElement(new Form(helper));
+        public static IElement<Form> Form(this IElementHelper helper) => helper.Adapter.GetElement(new Form(helper));
 
         // Attributes
 

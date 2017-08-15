@@ -4,7 +4,7 @@ namespace FluentFrontend.Element
 {
     public class Button : ElementTag
     {
-        internal Button(ElementHelper helper) : base(helper, "el-button")
+        internal Button(IElementHelper helper) : base(helper, "el-button")
         {
         }
     }
@@ -13,7 +13,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<Button> Button(this ElementHelper helper) => helper.Adapter.GetElement(new Button(helper));
+        public static IElement<Button> Button(this IElementHelper helper) => helper.Adapter.GetElement(new Button(helper));
 
         // Attributes
 

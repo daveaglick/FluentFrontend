@@ -4,7 +4,7 @@ namespace FluentFrontend.Element
 {
     public class Tooltip : ElementTag
     {
-        internal Tooltip(ElementHelper helper) : base(helper, "el-tooltip")
+        internal Tooltip(IElementHelper helper) : base(helper, "el-tooltip")
         {
         }
     }
@@ -13,7 +13,7 @@ namespace FluentFrontend.Element
     {
         // Element
 
-        public static IElement<Tooltip> Tooltip(this ElementHelper helper) => helper.Adapter.GetElement(new Tooltip(helper));
+        public static IElement<Tooltip> Tooltip(this IElementHelper helper) => helper.Adapter.GetElement(new Tooltip(helper));
 
         // Attributes
 

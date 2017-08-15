@@ -7,11 +7,13 @@ using System.Text;
 
 namespace FluentFrontend
 {
-    public abstract class FluentHelper : IFluentHelper
+    public abstract class FluentHelper<TModel> : IFluentHelper<TModel>
     {
-        public IFluentAdapter Adapter { get; }
+        public IFluentAdapter<TModel> Adapter { get; }
 
-        protected FluentHelper(IFluentAdapter adapter)
+        IFluentAdapter IFluentHelper.Adapter => Adapter;
+
+        protected FluentHelper(IFluentAdapter<TModel> adapter)
         {
             Adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
         }

@@ -6,8 +6,6 @@ namespace FluentFrontend.Vue
 {
     public static class VueExtensions
     {
-        public static VueHelper Vue(this IFluentAdapter adapter) => new VueHelper(adapter);
-
         public static VueHelper<TModel> Vue<TModel>(this IFluentAdapter<TModel> adapter) => new VueHelper<TModel>(adapter);
 
         // Directives

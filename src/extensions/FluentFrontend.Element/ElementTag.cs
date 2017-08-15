@@ -2,9 +2,9 @@ using FluentFrontend.Vue;
 
 namespace FluentFrontend.Element
 {
-    public abstract class ElementTag : VueTag<ElementHelper>
+    public abstract class ElementTag : Tag<IElementHelper>, IVueTag
     {
-        protected ElementTag(ElementHelper helper, string name, bool emptyElement = false) 
+        protected ElementTag(IElementHelper helper, string name, bool emptyElement = false) 
             : base(helper, name, emptyElement)
         {
         }

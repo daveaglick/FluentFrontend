@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FluentFrontend.Html
 {
-    public class HtmlTag : Tag<HtmlHelper>
+    public class HtmlTag : Tag<IHtmlHelper>
     {
-        internal HtmlTag(HtmlHelper helper, string name, bool emptyElement = false)
+        internal HtmlTag(IHtmlHelper helper, string name, bool emptyElement = false)
             : base(helper, name, emptyElement)
         {
         }

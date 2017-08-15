@@ -8,7 +8,7 @@ using System.Net;
 namespace FluentFrontend
 {
     public abstract class Tag<THelper> : ITag
-        where THelper : FluentHelper
+        where THelper : class, IFluentHelper
     {
         IFluentHelper ITag.Helper => Helper;
 

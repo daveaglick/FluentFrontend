@@ -17,4 +17,9 @@ namespace FluentFrontend
         /// <returns>The string attribute value for use in the element.</returns>
         KeyValuePair<string, string> GetAttribute(string name, object value);
     }
+
+    public interface IFluentHelper<TModel> : IFluentHelper
+    {
+        new IFluentAdapter<TModel> Adapter { get; }
+    }
 }
