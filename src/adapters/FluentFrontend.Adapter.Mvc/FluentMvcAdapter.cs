@@ -15,9 +15,13 @@ namespace FluentFrontend.Adapter.Mvc
         public override IElement<TTag> GetElement<TTag>(TTag tag) => new MvcElement<TTag>(tag);
 
         public override IModelMetadata GetModelMetadata<TProperty>(Expression<Func<TModel, TProperty>> expression) => 
-            new MvcModelMetadata(ModelMetadata.FromLambdaExpression(expression, new ViewDataDictionary<TModel>(Model)));
+            new MvcModelMetadata(
+                ModelMetadata.FromLambdaExpression(expression, new ViewDataDictionary<TModel>(Model)),
+                ExpressionHelper.GetMemberName(expression, true));
 
         public override IModelMetadata GetModelMetadata<TMetadataModel, TProperty>(Expression<Func<TMetadataModel, TProperty>> expression) => 
-            new MvcModelMetadata(ModelMetadata.FromLambdaExpression(expression, new ViewDataDictionary<TMetadataModel>(default(TMetadataModel))));
+            new MvcModelMetadata(
+                ModelMetadata.FromLambdaExpression(expression, new ViewDataDictionary<TMetadataModel>(default(TMetadataModel))),
+                ExpressionHelper.GetMemberName(expression, true));
     }
 }

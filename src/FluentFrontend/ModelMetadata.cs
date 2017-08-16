@@ -11,12 +11,14 @@ namespace FluentFrontend
     internal class ModelMetadata<TModel, TProperty> : IModelMetadata
     {
         public string PropertyName { get; }
+        public string NestedPropertyName { get; }
         public string DisplayName => PropertyName;
         public string Description => string.Empty;
         public bool IsRequired => false;
 
         public ModelMetadata(Expression<Func<TModel, TProperty>> expression)
         {
+            NestedPropertyName = ExpressionHelper.GetMemberName(expression, true);
             PropertyName = ExpressionHelper.GetMemberName(expression);
         }
     }

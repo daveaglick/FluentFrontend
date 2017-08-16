@@ -6,12 +6,15 @@ namespace FluentFrontend.Adapter.Mvc
     {
         private readonly ModelMetadata _metadata;
 
-        public MvcModelMetadata(ModelMetadata metadata)
+        public MvcModelMetadata(ModelMetadata metadata, string nestedPropertyName)
         {
             _metadata = metadata;
+            NestedPropertyName = nestedPropertyName;
         }
 
         public string PropertyName => _metadata.PropertyName;
+
+        public string NestedPropertyName { get; }
 
         public string DisplayName => _metadata.GetDisplayName();
 

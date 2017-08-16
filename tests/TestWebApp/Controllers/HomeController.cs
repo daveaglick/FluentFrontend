@@ -10,7 +10,7 @@ namespace TestWebApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(new Models.IndexModel());
         }
 
         public ActionResult About()

@@ -14,13 +14,20 @@
     var vue = Html.Fluent(new
     {
         Model,
-        ValidationErrors = new object[] {}
+        ValidationErrors = new object()
     }).Vue();
+    var element = vue.Element().ValidationErrorsProperty(x => x.ValidationErrors);
     using (vue.App().Begin())
     {
-        using (vue.Element().Form().Begin())
+        using (element.Row().Begin())
         {
-            vue.Element().DatePickerFor(x => x.Model.Foo).Write();
+            using (element.Col().Begin())
+            {
+                using (element.Form().Begin())
+                {
+                    element.DatePickerFor(x => x.Model.Foo).Write();
+                }
+            }
         }
     }
     vue.Instance().Write();

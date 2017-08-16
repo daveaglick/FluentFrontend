@@ -19,16 +19,12 @@ namespace FluentFrontend.Element
 
         public static IElement<DatePicker> DatePickerFor<TModel, TProperty>(
             this ElementHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression,
-            string dataProperty = null,
-            string validationErrorsProperty = "validationErrors",
+            Expression<Func<TModel, TProperty>> dataProperty,
             bool formItemWrapper = true,
             bool tooltipDescription = true) =>
             helper.DatePicker().For(
                 helper,
-                expression,
                 dataProperty,
-                validationErrorsProperty,
                 formItemWrapper,
                 tooltipDescription);
 
