@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace FluentFrontend.Vue
 {
     /// <summary>
-    /// Represents an attribute value that should be bound.
+    /// Represents an attribute value that should be bound. Any nested <see cref="BoundValue"/> objects
+    /// will be unwrapped and the <see cref="Value"/> property will reflect the nested value.
     /// </summary>
     public class BoundValue
     {
@@ -13,6 +15,10 @@ namespace FluentFrontend.Vue
 
         public BoundValue(object value)
         {
+            while (value is BoundValue boundValue)
+            {
+                value = boundValue.Value;
+            }
             Value = value;
         }
 
@@ -20,7 +26,7 @@ namespace FluentFrontend.Vue
     }
 
     /// <summary>
-    /// A bound value that can be an expression or a specific type.
+    /// A bound value that can be a JS expression or a specific type.
     /// </summary>
     /// <typeparam name="T">The type of the value.</typeparam>
     public class BoundValue<T> : BoundValue

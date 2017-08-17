@@ -77,36 +77,36 @@ namespace FluentFrontend.Element
 
         // Events
 
-        public static IElement<Table> OnSelect(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("select", handler, modifiers);
+        public static IElement<Table> OnSelect(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("select", handler, modifiers);
 
-        public static IElement<Table> OnSelectAll(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("select-all", handler, modifiers);
+        public static IElement<Table> OnSelectAll(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("select-all", handler, modifiers);
 
-        public static IElement<Table> OnSelectionChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("selection-change", handler, modifiers);
+        public static IElement<Table> OnSelectionChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("selection-change", handler, modifiers);
 
-        public static IElement<Table> OnCellMouseEnter(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("cell-mouse-enter", handler, modifiers);
+        public static IElement<Table> OnCellMouseEnter(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("cell-mouse-enter", handler, modifiers);
 
-        public static IElement<Table> OnCellMouseLeave(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("cell-mouse-leave", handler, modifiers);
+        public static IElement<Table> OnCellMouseLeave(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("cell-mouse-leave", handler, modifiers);
 
-        public static IElement<Table> OnCellClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("cell-click", handler, modifiers);
+        public static IElement<Table> OnCellClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("cell-click", handler, modifiers);
 
-        public static IElement<Table> OnCellDoubleClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("cell-dblclick", handler, modifiers);
+        public static IElement<Table> OnCellDoubleClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("cell-dblclick", handler, modifiers);
 
-        public static IElement<Table> OnRowClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("row-click", handler, modifiers);
+        public static IElement<Table> OnRowClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("row-click", handler, modifiers);
 
-        public static IElement<Table> OnRowContextMenu(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("row-contextmenu", handler, modifiers);
+        public static IElement<Table> OnRowContextMenu(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("row-contextmenu", handler, modifiers);
 
-        public static IElement<Table> OnRowDoubleClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("row-dblclick", handler, modifiers);
+        public static IElement<Table> OnRowDoubleClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("row-dblclick", handler, modifiers);
 
-        public static IElement<Table> OnHeaderClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("header-click", handler, modifiers);
+        public static IElement<Table> OnHeaderClick(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("header-click", handler, modifiers);
 
-        public static IElement<Table> OnSortChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("sort-change", handler, modifiers);
+        public static IElement<Table> OnSortChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("sort-change", handler, modifiers);
 
-        public static IElement<Table> OnFilterChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("filter-change", handler, modifiers);
+        public static IElement<Table> OnFilterChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("filter-change", handler, modifiers);
 
-        public static IElement<Table> OnCurrentChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("current-change", handler, modifiers);
+        public static IElement<Table> OnCurrentChange(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("current-change", handler, modifiers);
 
-        public static IElement<Table> OnHeaderDragEnd(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("header-dragend", handler, modifiers);
+        public static IElement<Table> OnHeaderDragEnd(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("header-dragend", handler, modifiers);
 
-        public static IElement<Table> OnExpand(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.On("expand", handler, modifiers);
+        public static IElement<Table> OnExpand(this IElement<Table> element, string handler, EventModifiers? modifiers = null) => element.VOn("expand", handler, modifiers);
     }
 }

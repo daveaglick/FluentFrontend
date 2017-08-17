@@ -17,17 +17,6 @@ namespace FluentFrontend.Element
 
         public static IElement<DatePicker> DatePicker(this IElementHelper helper) => helper.Adapter.GetElement(new DatePicker(helper));
 
-        public static IElement<DatePicker> DatePickerFor<TModel, TProperty>(
-            this ElementHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> dataProperty,
-            bool formItemWrapper = true,
-            bool tooltipDescription = true) =>
-            helper.DatePicker().For(
-                helper,
-                dataProperty,
-                formItemWrapper,
-                tooltipDescription);
-
         // Attributes
 
         public static IElement<DatePicker> Readonly(this IElement<DatePicker> element, BoundValue<bool> @readonly) => element.Attribute("readonly", @readonly);
@@ -66,7 +55,7 @@ namespace FluentFrontend.Element
 
         // Events
 
-        public static IElement<DatePicker> OnChange(this IElement<DatePicker> element, string handler, EventModifiers? modifiers = null) => element.On("change", handler, modifiers);
+        public static IElement<DatePicker> OnChange(this IElement<DatePicker> element, string handler, EventModifiers? modifiers = null) => element.VOn("change", handler, modifiers);
     }
 
     public enum DatePickerAlign

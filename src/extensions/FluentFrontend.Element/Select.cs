@@ -63,13 +63,13 @@ namespace FluentFrontend.Element
 
         // Events
 
-        public static IElement<Select> OnChange(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.On("change", handler, modifiers);
+        public static IElement<Select> OnChange(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.VOn("change", handler, modifiers);
 
-        public static IElement<Select> OnVisibleChange(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.On("visible-change", handler, modifiers);
+        public static IElement<Select> OnVisibleChange(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.VOn("visible-change", handler, modifiers);
 
-        public static IElement<Select> OnRemoveTag(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.On("remove-tag", handler, modifiers);
+        public static IElement<Select> OnRemoveTag(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.VOn("remove-tag", handler, modifiers);
 
-        public static IElement<Select> OnClear(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.On("clear", handler, modifiers);
+        public static IElement<Select> OnClear(this IElement<Select> element, string handler, EventModifiers? modifiers = null) => element.VOn("clear", handler, modifiers);
 
         // Other
 
@@ -80,7 +80,7 @@ namespace FluentFrontend.Element
                 throw new ArgumentNullException(nameof(property));
             }
             
-            IElement<Option> option = element.Tag.Helper.Option().For(property);
+            IElement<Option> option = element.Tag.Helper.Option().VFor(property);
 
             if (label != null)
             {

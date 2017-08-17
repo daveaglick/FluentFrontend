@@ -8,52 +8,58 @@ namespace FluentFrontend.Element
 {
     public static class ElementExtensions
     {
+        private const string ValidationErrorsKey = nameof(ValidationErrorsKey);
+
         public static ElementHelper<TModel> Element<TModel>(this IFluentAdapter<TModel> adapter) => new ElementHelper<TModel>(adapter);
-        
-        public static VueElementHelper<TModel> Element<TModel>(this VueHelper<TModel> vue) => new VueElementHelper<TModel>(vue.Adapter, vue);
-        
-        public static IElement<TTag> For<TTag, TModel, TProperty>(
+
+        public static IElement<VueInstance<TData>> ValidationErrors<TData>(this IElement<VueInstance<TData>> instance, string validationErrorsProperty) =>
+            instance.SetTagData(ValidationErrorsKey, validationErrorsProperty);
+
+        public static IElement<VueInstance<TData>> ValidationErrors<TData>(this IElement<VueInstance<TData>> instance, Expression<Func<TData, object>> validationErrorsProperty) =>
+            instance.SetTagData(ValidationErrorsKey, ExpressionHelper.GetMemberName(validationErrorsProperty, true));
+
+        public static IElement<TTag> For<TTag>(
             this IElement<TTag> element,
-            ElementHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> dataProperty,
+            BoundValue value,
             bool formItemWrapper = true, 
             bool tooltipDescription = true) 
             where TTag : ElementTag
         {
-            if (dataProperty == null)
+            if (value == null)
             {
-                throw new ArgumentNullException(nameof(dataProperty));
+                throw new ArgumentNullException(nameof(value));
             }
 
-            IModelMetadata metadata = helper.Adapter.GetModelMetadata(dataProperty);
-            if (metadata == null)
-            {
-                throw new Exception("Could not get model metadata.");
-            }
-
-            // Set the model based on the binding
-            string modelProperty = metadata.NestedPropertyName;
-            element = element.Model(modelProperty);
+            element = element.VModel(value);
 
             // Create the form item wrapper
+            VueInstanceBoundValue instanceValue = value as VueInstanceBoundValue;
             if (formItemWrapper)
             {
-                IElement<FormItem> formItem = helper.FormItem()
-                    .Label(metadata.DisplayName)
-                    .Required(metadata.IsRequired);
-                if (!string.IsNullOrWhiteSpace(helper.ValidationErrorsProperty))
+                IElement<FormItem> formItem = element.Tag.Helper.FormItem();
+                if (instanceValue != null)
                 {
-                    formItem = formItem.Error((BoundValue)$"{helper.ValidationErrorsProperty}['{modelProperty}']");
+                    formItem = formItem
+                        .Label(instanceValue.Metadata.DisplayName)
+                        .Required(instanceValue.Metadata.IsRequired);
+
+                    // Set the validation property
+                    if (instanceValue.Instance.TagData.TryGetValue(ValidationErrorsKey, out object validationErrorsProperty))
+                    {
+                        formItem = formItem.Error((BoundValue)$"{validationErrorsProperty}['{value.Value}']");
+                    }
                 }
+
+                // Add the form item as a parent
                 element = element.Parent(formItem);
             }
 
             // Create the tooltip description
-            if (tooltipDescription && !string.IsNullOrWhiteSpace(metadata.Description))
+            if (tooltipDescription && !string.IsNullOrWhiteSpace(instanceValue?.Metadata.Description))
             {
                 element = element.Child(
-                    helper.Tooltip()
-                        .Content(metadata.Description)
+                    element.Tag.Helper.Tooltip()
+                        .Content(instanceValue.Metadata.Description)
                         .Html("<i class=\"el-icon-information\"></i>"),
                     ChildPosition.AfterClosing);
             }

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq.Expressions;
 using Newtonsoft.Json;
 
 namespace FluentFrontend.Vue
@@ -8,14 +9,11 @@ namespace FluentFrontend.Vue
     {
     }
 
-    public class VueInstance : Tag<IVueHelper>, IVueInstance
+    public class VueInstance<TData> : Tag<IVueHelper>, IVueInstance
     {
-        public static class TagDataKeys
-        {
-            public const string InstanceName = nameof(InstanceName);
-            public const string ElementId = nameof(ElementId);
-            public const string Data = nameof(Data);
-        }
+        public const string InstanceNameKey = nameof(InstanceNameKey);
+        public const string ElementIdKey = nameof(ElementIdKey);
+        public const string DataKey = nameof(DataKey);
 
         internal VueInstance(IVueHelper helper) : base(helper, "script")
         {
@@ -25,8 +23,8 @@ namespace FluentFrontend.Vue
         {
             base.Begin(writer, data);
 
-            string instanceName = (string) data.TagData[TagDataKeys.InstanceName];
-            string elementId = (string)data.TagData[TagDataKeys.ElementId];
+            string instanceName = (string) data.TagData[InstanceNameKey];
+            string elementId = (string)data.TagData[ElementIdKey];
             string vueModel = GetVueModel(data);
 
             // Begin
@@ -71,7 +69,7 @@ namespace FluentFrontend.Vue
 
         private string GetVueModel(ElementData data)
         {
-            if (!data.TagData.TryGetValue(TagDataKeys.Data, out object vueModel))
+            if (!data.TagData.TryGetValue(DataKey, out object vueModel))
             {
                 return null;
             }
@@ -104,25 +102,37 @@ namespace FluentFrontend.Vue
     {
         // Element
         
-        public static IElement<VueInstance> Instance<TModel>(
+        public static IElement<VueInstance<TModel>> Instance<TModel>(
             this VueHelper<TModel> helper, string instanceName = "vm", string elementId = "app")
             where TModel : class =>
-            helper.Adapter.GetElement(new VueInstance(helper))
+            helper.Adapter.GetElement(new VueInstance<TModel>(helper))
                 .InstanceName(instanceName).ElementId(elementId).Data(helper.Adapter.Model);
+
+        public static IElement<VueInstance<TData>> Instance<TData>(
+            this IVueHelper helper, TData model, string instanceName = "vm", string elementId = "app")
+            where TData : class =>
+            helper.Adapter.GetElement(new VueInstance<TData>(helper))
+                .InstanceName(instanceName).ElementId(elementId).Data(model);
 
         // Data
 
-        public static IElement<VueInstance> InstanceName(this IElement<VueInstance> element, string instanceName) =>
-            element.SetTagData(VueInstance.TagDataKeys.InstanceName, instanceName?.Trim());
+        public static IElement<VueInstance<TData>> InstanceName<TData>(this IElement<VueInstance<TData>> element, string instanceName) =>
+            element.SetTagData(VueInstance<TData>.InstanceNameKey, instanceName?.Trim());
 
-        public static IElement<VueInstance> ElementId(this IElement<VueInstance> element, string elementId) =>
-            element.SetTagData(VueInstance.TagDataKeys.ElementId, elementId?.Trim());
+        public static IElement<VueInstance<TData>> ElementId<TData>(this IElement<VueInstance<TData>> element, string elementId) =>
+            element.SetTagData(VueInstance<TData>.ElementIdKey, elementId?.Trim());
 
-        public static IElement<VueInstance> Data(this IElement<VueInstance> element, string dataScript) => 
-            element.SetTagData(VueInstance.TagDataKeys.Data, dataScript);
+        public static IElement<VueInstance<TData>> Data<TData>(this IElement<VueInstance<TData>> element, string dataScript) => 
+            element.SetTagData(VueInstance<TData>.DataKey, dataScript);
 
-        public static IElement<VueInstance> Data<TModel>(this IElement<VueInstance> element, TModel model = null)
-            where TModel : class => 
-            element.SetTagData(VueInstance.TagDataKeys.Data, model ?? Activator.CreateInstance<TModel>());
+        public static IElement<VueInstance<TData>> Data<TData>(this IElement<VueInstance<TData>> element, TData model = null)
+            where TData : class => 
+            element.SetTagData(VueInstance<TData>.DataKey, model ?? Activator.CreateInstance<TData>());
+
+        public static string Data<TData, TProperty>(this IElement<VueInstance<TData>> element, Expression<Func<TData, TProperty>> expression) => 
+            ExpressionHelper.GetMemberName(expression, true);
+
+        public static BoundValue Bind<TData, TProperty>(this IElement<VueInstance<TData>> element, Expression<Func<TData, TProperty>> expression) => 
+            new VueInstanceBoundValue(element, element.Tag.Helper.Adapter.GetModelMetadata(expression));
     }
 }

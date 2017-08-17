@@ -10,12 +10,12 @@ namespace FluentFrontend.Vue
 
         // Directives
 
-        public static IElement<TTag> On<TTag>(
+        public static IElement<TTag> VOn<TTag>(
             this IElement<TTag> element,
             string eventName,
             string handler,
             EventModifiers? modifiers = null)
-            where TTag : class, IVueTag
+            where TTag : class, ITag
         {
             string name = $"v-on:{eventName}";
             if (modifiers != null)
@@ -31,41 +31,41 @@ namespace FluentFrontend.Vue
             return element.Attribute(name, handler);
         }
 
-        public static IElement<TTag> Once<TTag>(this IElement<TTag> element, string value)
-            where TTag : class, IVueTag =>
+        public static IElement<TTag> VOnce<TTag>(this IElement<TTag> element, string value)
+            where TTag : class, ITag =>
             element.Attribute("v-once", string.Empty);
 
-        public static IElement<TTag> If<TTag>(this IElement<TTag> element, string value)
-            where TTag : class, IVueTag =>
+        public static IElement<TTag> VIf<TTag>(this IElement<TTag> element, string value)
+            where TTag : class, ITag =>
             element.Attribute("v-if", value);
 
-        public static IElement<TTag> If<TTag>(this IElement<TTag> element, bool value)
-            where TTag : class, IVueTag =>
+        public static IElement<TTag> VIf<TTag>(this IElement<TTag> element, bool value)
+            where TTag : class, ITag =>
             element.Attribute("v-if", value.ToString().ToLower());
 
-        public static IElement<TTag> Show<TTag>(this IElement<TTag> element, string value)
-            where TTag : class, IVueTag =>
+        public static IElement<TTag> VShow<TTag>(this IElement<TTag> element, string value)
+            where TTag : class, ITag =>
             element.Attribute("v-show", value);
 
-        public static IElement<TTag> Show<TTag>(this IElement<TTag> element, bool value)
-            where TTag : class, IVueTag =>
+        public static IElement<TTag> VShow<TTag>(this IElement<TTag> element, bool value)
+            where TTag : class, ITag =>
             element.Attribute("v-show", value.ToString().ToLower());
 
-        public static IElement<TTag> For<TTag>(this IElement<TTag> element, string data, string item = "item")
-            where TTag : class, IVueTag =>
+        public static IElement<TTag> VFor<TTag>(this IElement<TTag> element, string data, string item = "item")
+            where TTag : class, ITag =>
             element.Attribute("v-for", $"{item} in {data}");
 
         // Common Attributes
 
-        public static IElement<TTag> Ref<TTag>(this IElement<TTag> element, string referenceId)
-            where TTag : class, IVueTag =>
+        public static IElement<TTag> VRef<TTag>(this IElement<TTag> element, string referenceId)
+            where TTag : class, ITag =>
             element.Attribute("ref", referenceId);
 
-        public static IElement<TTag> Model<TTag>(
+        public static IElement<TTag> VModel<TTag>(
             this IElement<TTag> element,
-            string model,
+            BoundValue value,
             BindingModifiers? modifiers = null)
-            where TTag : class, IVueTag
+            where TTag : class, ITag
         {
             string name = $"v-model";
             if (modifiers != null)
@@ -78,16 +78,16 @@ namespace FluentFrontend.Vue
                     }
                 }
             }
-            return element.Attribute(name, model);
+            return element.Attribute(name, value.Value);
         }
 
         // Common Events
 
-        public static IElement<TTag> OnClick<TTag>(
+        public static IElement<TTag> VOnClick<TTag>(
             this IElement<TTag> element,
             string handler,
             EventModifiers? modifiers = null)
-            where TTag : class, IVueTag =>
-            element.On("click", handler, modifiers);
+            where TTag : class, ITag =>
+            element.VOn("click", handler, modifiers);
     }
 }

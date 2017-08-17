@@ -9,14 +9,17 @@
 }
 
 @model TestWebApp.Models.IndexModel
+    
+<p></p>
 
 @{
-    var vue = Html.Fluent(new
+    var vue = Html.Fluent().Vue();
+    var element = Html.Fluent().Element();
+    var instance = vue.Instance(new
     {
         Model,
         ValidationErrors = new object()
-    }).Vue();
-    var element = vue.Element().ValidationErrorsProperty(x => x.ValidationErrors);
+    }).ValidationErrors(x => x.ValidationErrors);
     using (vue.App().Begin())
     {
         using (element.Row().Begin())
@@ -25,10 +28,12 @@
             {
                 using (element.Form().Begin())
                 {
-                    element.DatePickerFor(x => x.Model.Foo).Write();
+                    element.DatePicker()
+                        .For(instance.Bind(x => x.Model.Foo))
+                        .Write();
                 }
             }
         }
     }
-    vue.Instance().Write();
+    instance.Write();
 }
