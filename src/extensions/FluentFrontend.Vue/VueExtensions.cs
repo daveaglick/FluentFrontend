@@ -17,6 +17,11 @@ namespace FluentFrontend.Vue
             EventModifiers? modifiers = null)
             where TTag : class, ITag
         {
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+
             string name = $"v-on:{eventName}";
             if (modifiers != null)
             {
@@ -29,6 +34,37 @@ namespace FluentFrontend.Vue
                 }
             }
             return element.Attribute(name, handler);
+        }
+
+        public static IElement<TTag> VOn<TTag, TData>(
+            this IElement<TTag> element,
+            ref IElement<VueInstance<TData>> instance,
+            string eventName,
+            string methodName,
+            string methodBody,
+            EventModifiers? modifiers = null)
+            where TTag : class, ITag
+        {
+            instance = instance.Method(methodName, $"function (event) {{ {methodBody} }}");
+            return element.VOn(eventName, methodName, modifiers);
+        }
+
+        public static IElement<TTag> VOn<TTag, TData>(
+            this IElement<TTag> element,
+            ref IElement<VueInstance<TData>> instance,
+            string eventName,
+            string methodBody,
+            EventModifiers? modifiers = null)
+            where TTag : class, ITag
+        {
+            int c = 1;
+            string methodName = $"{eventName}{c}";
+            while (instance.TagData.ContainsKey(methodName))
+            {
+                c++;
+                methodName = $"{eventName}{c}";
+            }
+            return element.VOn(ref instance, eventName, methodName, methodBody, modifiers);
         }
 
         public static IElement<TTag> VOnce<TTag>(this IElement<TTag> element, string value)
@@ -80,14 +116,5 @@ namespace FluentFrontend.Vue
             }
             return element.Attribute(name, value.Value);
         }
-
-        // Common Events
-
-        public static IElement<TTag> VOnClick<TTag>(
-            this IElement<TTag> element,
-            string handler,
-            EventModifiers? modifiers = null)
-            where TTag : class, ITag =>
-            element.VOn("click", handler, modifiers);
     }
 }

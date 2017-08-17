@@ -18,6 +18,13 @@ namespace FluentFrontend.Element
         public static IElement<VueInstance<TData>> ValidationErrors<TData>(this IElement<VueInstance<TData>> instance, Expression<Func<TData, object>> validationErrorsProperty) =>
             instance.SetTagData(ValidationErrorsKey, ExpressionHelper.GetMemberName(validationErrorsProperty, true));
 
+        public static IElement<TTag> OnClick<TTag>(
+            this IElement<TTag> element,
+            string handler,
+            EventModifiers? modifiers = null)
+            where TTag : ElementTag =>
+            element.VOn("click", handler, modifiers);
+
         public static IElement<TTag> For<TTag>(
             this IElement<TTag> element,
             BoundValue value,

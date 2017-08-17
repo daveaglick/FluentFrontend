@@ -30,6 +30,7 @@
                 {
                     element.DatePicker()
                         .For(instance.Bind(x => x.Model.Foo))
+                        .VOn(ref instance, "change", "alert('click!');")
                         .Write();
                 }
             }

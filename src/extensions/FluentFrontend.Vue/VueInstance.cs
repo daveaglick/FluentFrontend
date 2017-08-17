@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 
@@ -14,6 +17,7 @@ namespace FluentFrontend.Vue
         public const string InstanceNameKey = nameof(InstanceNameKey);
         public const string ElementIdKey = nameof(ElementIdKey);
         public const string DataKey = nameof(DataKey);
+        public const string MethodsKey = nameof(MethodsKey);
 
         internal VueInstance(IVueHelper helper) : base(helper, "script")
         {
@@ -23,11 +27,9 @@ namespace FluentFrontend.Vue
         {
             base.Begin(writer, data);
 
-            string instanceName = (string) data.TagData[InstanceNameKey];
-            string elementId = (string)data.TagData[ElementIdKey];
-            string vueModel = GetVueModel(data);
 
             // Begin
+            string instanceName = (string) data.TagData[InstanceNameKey];
             bool writeComma = false;
             if (!string.IsNullOrWhiteSpace(instanceName))
             {
@@ -36,6 +38,7 @@ namespace FluentFrontend.Vue
             writer.Write("new Vue({");
 
             // Element ID
+            string elementId = (string)data.TagData[ElementIdKey];
             if (!string.IsNullOrWhiteSpace(elementId))
             {
                 WriteLine(writer, ref writeComma);
@@ -47,13 +50,32 @@ namespace FluentFrontend.Vue
             }
 
             // Data
-            if (!string.IsNullOrWhiteSpace(vueModel))
+            string vueData = GetVueModel(data);
+            if (!string.IsNullOrWhiteSpace(vueData))
             {
                 WriteLine(writer, ref writeComma);
-                writer.Write($"data: {vueModel}");
+                writer.Write($"data: {vueData}");
+            }
+
+            // Methods
+            IImmutableDictionary<string, string> methods =
+                (IImmutableDictionary<string, string>) data.TagData[MethodsKey];
+            if (methods != null && methods.Count > 0)
+            {
+                WriteLine(writer, ref writeComma);
+                writer.Write("methods: {");
+                bool writeMethodComma = false;
+                foreach (KeyValuePair<string, string> method in methods)
+                {
+                    WriteLine(writer, ref writeMethodComma);
+                    writer.Write($"{method.Key}: {method.Value}");
+                }
+                writer.WriteLine();
+                writer.Write("}");
             }
 
             // End
+            writer.WriteLine();
             writer.Write("});");
         }
 
@@ -134,5 +156,17 @@ namespace FluentFrontend.Vue
 
         public static BoundValue Bind<TData, TProperty>(this IElement<VueInstance<TData>> element, Expression<Func<TData, TProperty>> expression) => 
             new VueInstanceBoundValue(element, element.Tag.Helper.Adapter.GetModelMetadata(expression));
+
+        public static IElement<VueInstance<TData>> Method<TData>(this IElement<VueInstance<TData>> element, string methodName, string method)
+        {
+            if (methodName == null)
+            {
+                throw new ArgumentNullException(nameof(methodName));
+            }
+            return element.SetTagData(
+                VueInstance<TData>.MethodsKey,
+                x => string.IsNullOrWhiteSpace(method) ? x.Remove(methodName) : x.SetItem(methodName, method),
+                ImmutableDictionary<string, string>.Empty);
+        }
     }
 }

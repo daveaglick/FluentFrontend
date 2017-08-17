@@ -55,6 +55,8 @@ namespace FluentFrontend.Element
 
         // Events
 
+        // TODO: Figure out how to handle function parameters when adding a method to the instance - should the whole "function(){}" definition be provided for the method body?
+
         public static IElement<DatePicker> OnChange(this IElement<DatePicker> element, string handler, EventModifiers? modifiers = null) => element.VOn("change", handler, modifiers);
     }
 
