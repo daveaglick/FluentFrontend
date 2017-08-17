@@ -30,10 +30,14 @@
                 {
                     element.DatePicker()
                         .For(instance.Bind(x => x.Model.Foo))
-                        .VOn(ref instance, "change", "alert('click!');")
+                        .OnChange(ref instance, "alert('click!');")
                         .Write();
                 }
             }
+        }
+        using (element.Row().Begin())
+        {
+            <p>Selected date: {{ @instance.Data(x => x.Model.Foo) }}</p>
         }
     }
     instance.Write();

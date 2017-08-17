@@ -157,15 +157,17 @@ namespace FluentFrontend.Vue
         public static BoundValue Bind<TData, TProperty>(this IElement<VueInstance<TData>> element, Expression<Func<TData, TProperty>> expression) => 
             new VueInstanceBoundValue(element, element.Tag.Helper.Adapter.GetModelMetadata(expression));
 
-        public static IElement<VueInstance<TData>> Method<TData>(this IElement<VueInstance<TData>> element, string methodName, string method)
+        public static IElement<VueInstance<TData>> Method<TData>(this IElement<VueInstance<TData>> element, string methodName, string methodBody)
         {
             if (methodName == null)
             {
                 throw new ArgumentNullException(nameof(methodName));
             }
+            methodBody = methodBody.Trim();
+            methodBody = methodBody.StartsWith("function", StringComparison.OrdinalIgnoreCase) ? methodBody : $"function () {{ {methodBody} }}";
             return element.SetTagData(
                 VueInstance<TData>.MethodsKey,
-                x => string.IsNullOrWhiteSpace(method) ? x.Remove(methodName) : x.SetItem(methodName, method),
+                x => string.IsNullOrWhiteSpace(methodBody) ? x.Remove(methodName) : x.SetItem(methodName, methodBody),
                 ImmutableDictionary<string, string>.Empty);
         }
     }

@@ -54,10 +54,11 @@ namespace FluentFrontend.Element
         public static IElement<DatePicker> DefaultValue(this IElement<DatePicker> element, BoundValue<DateTime> defaultValue) => element.Attribute("default-value", defaultValue);
 
         // Events
-
-        // TODO: Figure out how to handle function parameters when adding a method to the instance - should the whole "function(){}" definition be provided for the method body?
-
+        
         public static IElement<DatePicker> OnChange(this IElement<DatePicker> element, string handler, EventModifiers? modifiers = null) => element.VOn("change", handler, modifiers);
+
+        public static IElement<DatePicker> OnChange<TData>(this IElement<DatePicker> element, ref IElement<VueInstance<TData>> instance, string methodBody, string methodName = null, EventModifiers? modifiers = null) => 
+            element.VOn(ref instance, "change", methodBody, methodName, modifiers);
     }
 
     public enum DatePickerAlign

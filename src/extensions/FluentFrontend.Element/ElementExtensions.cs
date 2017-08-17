@@ -25,6 +25,15 @@ namespace FluentFrontend.Element
             where TTag : ElementTag =>
             element.VOn("click", handler, modifiers);
 
+        public static IElement<TTag> OnClick<TTag, TData>(
+            this IElement<TTag> element,
+            ref IElement<VueInstance<TData>> instance,
+            string methodBody,
+            string methodName = null,
+            EventModifiers? modifiers = null)
+            where TTag : ElementTag =>
+            element.VOn(ref instance, "click", methodBody, methodName, modifiers);
+
         public static IElement<TTag> For<TTag>(
             this IElement<TTag> element,
             BoundValue value,

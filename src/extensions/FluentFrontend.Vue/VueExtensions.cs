@@ -40,31 +40,25 @@ namespace FluentFrontend.Vue
             this IElement<TTag> element,
             ref IElement<VueInstance<TData>> instance,
             string eventName,
-            string methodName,
             string methodBody,
+            string methodName = null,
             EventModifiers? modifiers = null)
             where TTag : class, ITag
         {
-            instance = instance.Method(methodName, $"function (event) {{ {methodBody} }}");
-            return element.VOn(eventName, methodName, modifiers);
-        }
-
-        public static IElement<TTag> VOn<TTag, TData>(
-            this IElement<TTag> element,
-            ref IElement<VueInstance<TData>> instance,
-            string eventName,
-            string methodBody,
-            EventModifiers? modifiers = null)
-            where TTag : class, ITag
-        {
-            int c = 1;
-            string methodName = $"{eventName}{c}";
-            while (instance.TagData.ContainsKey(methodName))
+            if (methodName == null)
             {
-                c++;
+                int c = 1;
                 methodName = $"{eventName}{c}";
+                while (instance.TagData.ContainsKey(methodName))
+                {
+                    c++;
+                    methodName = $"{eventName}{c}";
+                }
             }
-            return element.VOn(ref instance, eventName, methodName, methodBody, modifiers);
+            methodBody = methodBody.Trim();
+            methodBody = methodBody.StartsWith("function", StringComparison.OrdinalIgnoreCase) ? methodBody : $"function (event) {{ {methodBody} }}";
+            instance = instance.Method(methodName, methodBody);
+            return element.VOn(eventName, methodName, modifiers);
         }
 
         public static IElement<TTag> VOnce<TTag>(this IElement<TTag> element, string value)
