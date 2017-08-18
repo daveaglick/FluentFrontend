@@ -13,6 +13,8 @@
 <p></p>
 
 @{
+    @Html.Fluent().Html("div").ForEach(new [] { 1, 2, 3 }, (e, i) => e.Child(Html.Fluent().Html("p").Text(i)))
+
     var vue = Html.Fluent().Vue();
     var element = Html.Fluent().Element();
     var instance = vue.Instance(new
@@ -29,7 +31,7 @@
                 using (element.Form().Begin())
                 {
                     element.DatePicker()
-                        .For(instance.Bind(x => x.Model.Foo))
+                        .For(instance.Bind(x => x.Model.SomeDate))
                         .OnChange(ref instance, "alert('click!');")
                         .Write();
                 }
@@ -37,7 +39,7 @@
         }
         using (element.Row().Begin())
         {
-            <p>Selected date: {{ @instance.Data(x => x.Model.Foo) }}</p>
+            <p>Selected date: {{ @instance.Data(x => x.Model.SomeDate) }}</p>
         }
     }
     instance.Write();

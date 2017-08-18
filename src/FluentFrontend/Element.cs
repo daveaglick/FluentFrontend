@@ -64,8 +64,8 @@ namespace FluentFrontend
         public IElement<TTag> Parent(IElement parent) =>
             Clone(_data.Parent(parent));
 
-        public IElement<TTag> Text(string text, ChildPosition position = ChildPosition.AfterOpening) =>
-            Clone(_data.Child(new ContentElement(Tag.Helper.Adapter.Writer, text, true), position));
+        public IElement<TTag> Text(object text, ChildPosition position = ChildPosition.AfterOpening) =>
+            Clone(_data.Child(new ContentElement(Tag.Helper.Adapter.Writer, text?.ToString(), true), position));
 
         public IElement<TTag> Html(string html, ChildPosition position = ChildPosition.AfterOpening) =>
             Clone(_data.Child(new ContentElement(Tag.Helper.Adapter.Writer, html, false), position));

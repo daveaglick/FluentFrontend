@@ -52,7 +52,7 @@ namespace FluentFrontend
         IElement<TTag> Class(params string[] classes);
         IElement<TTag> Child(IElement child, ChildPosition position = ChildPosition.AfterOpening);
         IElement<TTag> Parent(IElement parent);
-        IElement<TTag> Text(string text, ChildPosition position = ChildPosition.AfterOpening);
+        IElement<TTag> Text(object text, ChildPosition position = ChildPosition.AfterOpening);
         IElement<TTag> Html(string html, ChildPosition position = ChildPosition.AfterOpening);
         IElement<TTag> Id(string id);
 
